@@ -1,5 +1,26 @@
-# SupAut - Frontend (Dashboard)
+# SupAut - (Dashboard)
 
+## Adding Changes
+```
+git switch -c added-chart
+```
+Make the changes 
+```
+git add studentPage.js
+```
+```
+git status
+```
+```
+git add src/views/student/studentPage/studentPage.js
+```
+```
+git commit -m "Added chart to student page"
+```
+
+```
+ git push -u origin added-chart
+```
 ## Project Description
 Ardent is an all-you-need business partner, automating customer interaction while providing concise data related to your business in a simple dashboard. Aimed to help the management of small businesses, Ardent is both a culmination of a WhatsApp chat bot, and a business dashboard.
 
