@@ -1,5 +1,9 @@
 # SupAut - (Dashboard)
 
+## Important Links
+[CoreUI Documentation](https://coreui.io/react/docs/getting-started/introduction/)
+[Contributions](https://github.com/firstcontributions/first-contributions)
+
 ## Adding Changes
 ```
 git switch -c added-chart
