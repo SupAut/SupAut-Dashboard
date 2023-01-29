@@ -16,6 +16,14 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilHamburgerMenu } from '@coreui/icons'
+import {
+  CChartBar,
+  CChartDoughnut,
+  CChartLine,
+  CChartPie,
+  CChartPolarArea,
+  CChartRadar,
+} from '@coreui/react-chartjs'
 
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 
@@ -135,6 +143,21 @@ const ViewProductsPage = () => {
   return (
     <CRow>
       <CCol xs={12}>
+        <CCard className="mb-4">
+          <CCardBody>
+            <CChartDoughnut
+              data={{
+                labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
+                datasets: [
+                  {
+                    backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                    data: [40, 20, 80, 10],
+                  },
+                ],
+              }}
+            />
+          </CCardBody>
+        </CCard>
         <CCard className="mb-4">
           <CCardBody>
             <CTable align="middle" className="mb-0 border" responsive>
