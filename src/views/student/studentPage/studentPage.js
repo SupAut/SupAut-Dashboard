@@ -142,7 +142,7 @@ const ViewProductsPage = () => {
   // )
   return (
     <CRow>
-      <CCol xs={12}>
+      <CCol xs={6}>
         <CCard className="mb-4">
           <CCardBody>
             <CChartDoughnut
