@@ -9,9 +9,7 @@
 git switch -c added-chart
 ```
 Make the changes 
-```
-git add studentPage.js
-```
+
 ```
 git status
 ```
