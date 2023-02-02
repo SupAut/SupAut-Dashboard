@@ -1,5 +1,5 @@
-//import { collection, setDoc, doc, getDocs } from 'firebase/firestore'
-//import db from '../../../firebase'
+import { collection, setDoc, doc, getDocs } from 'firebase/firestore'
+import db from '../../../firebase'
 import React, { useState } from 'react'
 import {
   CButton,
@@ -15,32 +15,35 @@ import {
   CFormTextarea,
 } from '@coreui/react'
 
-function AddProductsPage() {
-  const [insertName, setInsertName] = useState('')
-  const [insertMeasurement, setInsertMeasurement] = useState('')
-  const [insertPrice, setInsertPrice] = useState('')
+function AddQuestionPage() {
+  const [insertGrade, setInsertGrade] = useState('')
+  const [insertChapter, setInsertChapter] = useState('')
+  const [insertQuestion, setInsertQuestion] = useState('')
   const [insertDescription, setInsertDescription] = useState('')
-  const [insertStatus, setInsertStatus] = useState('')
+  const [insertModelAnswer, setInsertModelAnswer] = useState('')
+  const [insertScore, setInsertScore] = useState('')
   // this is the insert method
   const insertRecord = async () => {
     console.log('Insert record')
-    // const getProdSize = await getDocs(collection(db, 'product'))
-    // const prodRef = collection(db, 'product')
-    // let orderSize = getProdSize.size + 1
-    // await setDoc(doc(prodRef, `${orderSize}`), {
-    //   name: insertName,
-    //   measurement: insertMeasurement,
-    //   price: insertPrice,
-    //   description: insertDescription,
-    //   status: insertStatus,
-    // })
+    const getQuestionSize = await getDocs(collection(db, 'question'))
+    const questionRef = collection(db, 'question')
+    let questionSize = getQuestionSize.size + 1
+    await setDoc(doc(questionRef, `${questionSize}`), {
+      class: insertGrade,
+      topic: insertChapter,
+      question: insertQuestion,
+      description: insertDescription,
+      modelAnswer: insertModelAnswer,
+      score: insertScore,
+    })
 
     // clearing all the fields after backend implementation
-    setInsertName('')
-    setInsertMeasurement('')
-    setInsertPrice('')
+    setInsertGrade('')
+    setInsertChapter('')
+    setInsertQuestion('')
     setInsertDescription('')
-    setInsertStatus('')
+    setInsertModelAnswer('')
+    setInsertScore('')
   }
 
   const [validated, setValidated] = useState(false)
@@ -54,7 +57,7 @@ function AddProductsPage() {
   }
   return (
     <>
-      <CRow xs={{ cols: 1 }} md={{ cols: 2 }}>
+      <CRow xs={{ cols: 1 }} md={{ cols: 1 }}>
         <CCol>
           <CCard className="mb-4">
             <CCardBody>
@@ -65,59 +68,57 @@ function AddProductsPage() {
                 onSubmit={handleSubmit && insertRecord}
               >
                 <CCol md={6}>
-                  <CFormLabel htmlFor="validationCustom04" id="measurement">
-                    Product Status
+                  <CFormLabel htmlFor="validationCustom04" id="grade">
+                    Grade
                   </CFormLabel>
                   <CFormSelect
                     id="validationCustom04"
-                    value={insertStatus}
-                    onChange={(e) => setInsertStatus(e.target.value)}
+                    value={insertGrade}
+                    onChange={(e) => setInsertGrade(e.target.value)}
                   >
-                    <option>menu</option>
-                    <option>off-the-shelf</option>
+                    <option>Grade 6</option>
+                    <option>Grade 7</option>
+                    <option>Grade 8</option>
+                    <option>Grade 9</option>
+                    <option>Grade 10</option>
                   </CFormSelect>
-                  <CFormFeedback invalid>Please provide a valid measurement.</CFormFeedback>
+                  <CFormFeedback invalid>Please provide a valid grade.</CFormFeedback>
+                </CCol>
+                <CCol md={6}>
+                  <CFormLabel htmlFor="validationCustom04" id="score">
+                    Score
+                  </CFormLabel>
+                  <CFormSelect
+                    id="validationCustom04"
+                    value={insertScore}
+                    onChange={(e) => setInsertScore(e.target.value)}
+                  >
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                  </CFormSelect>
+                  <CFormFeedback invalid>Please provide a valid score.</CFormFeedback>
                 </CCol>
                 <CCol md={12}>
-                  <CFormLabel htmlFor="validationCustom01">Product Name</CFormLabel>
+                  <CFormLabel htmlFor="validationCustom01">Chapter Name</CFormLabel>
                   <CFormInput
                     type="text"
                     id="validationCustom01"
                     required
-                    value={insertName}
-                    onChange={(e) => setInsertName(e.target.value)}
+                    value={insertChapter}
+                    onChange={(e) => setInsertChapter(e.target.value)}
                   />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
-                <CCol md={6}>
-                  <CFormLabel htmlFor="validationCustom04" id="measurement">
-                    Measurement
-                  </CFormLabel>
-                  <CFormSelect
-                    id="validationCustom04"
-                    value={insertMeasurement}
-                    onChange={(e) => setInsertMeasurement(e.target.value)}
-                  >
-                    <option>Pieces</option>
-                    <option>Large</option>
-                    <option>Medium</option>
-                    <option>Small</option>
-                    <option>2Kg</option>
-                    <option>1Kg</option>
-                    <option>500g</option>
-                  </CFormSelect>
-                  <CFormFeedback invalid>Please provide a valid measurement.</CFormFeedback>
-                </CCol>
-                <CCol md={6}>
-                  <CFormLabel htmlFor="validationCustom02" id="price">
-                    Price
-                  </CFormLabel>
+                <CCol md={12}>
+                  <CFormLabel htmlFor="validationCustom01">Question</CFormLabel>
                   <CFormInput
                     type="text"
-                    id="validationCustom02"
+                    id="validationCustom01"
                     required
-                    value={insertPrice}
-                    onChange={(e) => setInsertPrice(e.target.value)}
+                    value={insertQuestion}
+                    onChange={(e) => setInsertQuestion(e.target.value)}
                   />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
@@ -134,11 +135,24 @@ function AddProductsPage() {
                   ></CFormTextarea>
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
+                <CCol md={12}>
+                  <CFormLabel htmlFor="validationCustom02" id="modelAnswer">
+                    Model Answer
+                  </CFormLabel>
+                  <CFormTextarea
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                    required
+                    value={insertModelAnswer}
+                    onChange={(e) => setInsertModelAnswer(e.target.value)}
+                  ></CFormTextarea>
+                  <CFormFeedback valid>Looks good!</CFormFeedback>
+                </CCol>
                 <CCol xs={12}>
                   {' '}
                   <br />
                   <CButton color="secondary" className="text-high-emphasis float-end" type="submit">
-                    ADD PRODUCT
+                    ADD QUESTION
                   </CButton>
                 </CCol>
               </CForm>
@@ -150,4 +164,4 @@ function AddProductsPage() {
   )
 }
 
-export default AddProductsPage
+export default AddQuestionPage
