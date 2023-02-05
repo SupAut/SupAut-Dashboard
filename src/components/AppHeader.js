@@ -5,7 +5,7 @@ import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
-import slogo from 'src/assets/brand/supAut-logo.svg'
+import slogo from 'src/assets/brand/supAut-logo-negative.svg'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
