@@ -75,8 +75,8 @@ To run this repo you will need to have:
 Clone the repo and change into the new directory:
 
 ```bash
-git clone https://github.com/Zainab-Fahim/ardent-partner.git
-cd ardent-partner
+git clone https://github.com/SupAut/SupAut-Dashboard.git
+cd SupAut-Dashboard
 ```
 
 Install the dependencies:
