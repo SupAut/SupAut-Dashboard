@@ -6,6 +6,7 @@ import {
   CAccordionHeader,
   CAccordionItem,
   CAvatar,
+  CButton,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -17,7 +18,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilHamburgerMenu } from '@coreui/icons'
 
-import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
+import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react'
 
 //import { collection, query, onSnapshot } from 'firebase/firestore'
 
@@ -136,78 +137,159 @@ const ViewProductsPage = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <CCardHeader>Questions List Group</CCardHeader>
           <CCardBody>
-            <CTable align="middle" className="mb-0 border" responsive>
-              <CTableHead color="light">
+            <CTable>
+              <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell className="text-center">
-                    <CIcon icon={cilHamburgerMenu} />
-                  </CTableHeaderCell>
-                  <CTableHeaderCell>Item</CTableHeaderCell>
-                  <CTableHeaderCell className="text-center">Total Revenue</CTableHeaderCell>
-                  <CTableHeaderCell>Sales History</CTableHeaderCell>
-                  <CTableHeaderCell>Item Sale</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Detail</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Question</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Answer</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Activity</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {product.map((prod, index) => (
-                  <CTableRow v-for="cust in tableItems" key={index}>
-                    {/* Avatar */}
-                    <CTableDataCell className="text-center">
-                      <CAvatar
-                        size="md"
-                        src={`https://ui-avatars.com/api/?background=random&rounded=true&bold=true&name=${prod.item.id}`}
-                      />
-                    </CTableDataCell>
-                    {/* Item */}
-                    <CTableDataCell>
-                      <div>{prod.item.name}</div>
-                      <div className="small text-medium-emphasis">
-                        <CBadge color={prod.itemStatus === 'menu' ? 'info' : 'warning'}>
-                          {prod.itemStatus}
-                        </CBadge>
-                      </div>
-                    </CTableDataCell>
-                    {/* Total Revenue */}
-                    <CTableDataCell className="text-center">
-                      ${calcRevenue(prod.sales, prod.item.price)}
-                    </CTableDataCell>
-                    {/* Sales History */}
-                    {/* Purchase History */}
-                    <CTableDataCell className="text-center">
-                      {prod.sales.map((purchase, index) => (
-                        <CAccordion v-for="purchase in cust" key={index} flush>
-                          <CAccordionItem itemKey={index}>
-                            <CAccordionHeader>{purchase.date}</CAccordionHeader>
-                            <CAccordionBody>
-                              <CTable borderless small>
-                                <CTableBody>
-                                  <CTableRow v-for="item in tableItems" key={index}>
-                                    <CTableHeaderCell scope="row">
-                                      Order No.{purchase.id}
-                                    </CTableHeaderCell>
-                                    <CTableDataCell className="text-center">
-                                      <small>{purchase.customer.name}</small> -{' '}
-                                      {purchase.customer.contact}
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                      {' '}
-                                      Ordered Quantity : {purchase.quantity}
-                                    </CTableDataCell>
-                                  </CTableRow>
-                                </CTableBody>
-                              </CTable>
-                            </CAccordionBody>
-                          </CAccordionItem>
-                        </CAccordion>
-                      ))}
-                    </CTableDataCell>
-                    {/* Item Sale */}
-                    <CTableDataCell>
-                      ${prod.item.price} / {prod.item.measurement}
-                    </CTableDataCell>
-                  </CTableRow>
-                ))}
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #1
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Figurative Language</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #2
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Poetry Analysis </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #3
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Creative Writing </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #4
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Research Paper Writing</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #5
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Parts of Speech</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #6
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Othello</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #7
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Adverb</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #8
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Complex Sentences</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #9
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Comprehension</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">
+                    <CAvatar color="secondary" textColor="white">
+                      #10
+                    </CAvatar>
+                  </CTableHeaderCell>
+                  <CTableDataCell>Preposition</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Question Details</CButton>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton color="primary">Answer Details</CButton>
+                  </CTableDataCell>
+                </CTableRow>
               </CTableBody>
             </CTable>
           </CCardBody>
