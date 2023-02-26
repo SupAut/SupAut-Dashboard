@@ -1,4 +1,4 @@
-import { collection, setDoc, doc, getDocs } from 'firebase/firestore'
+import { collection, query, onSnapshot, setDoc, doc, getDocs } from 'firebase/firestore'
 import db from '../../../firebase'
 import React, { useState, useEffect } from 'react'
 //import db from '../../../firebase'
@@ -22,119 +22,30 @@ import { cilHamburgerMenu } from '@coreui/icons'
 
 import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react'
 
-//import { collection, query, onSnapshot } from 'firebase/firestore'
-
-function calcRevenue(sales, price) {
-  var total = 0
-  total = sales.length * price
-  for (var i = 0; i < sales.length; i++) {
-    total *= sales[i].quantity
-  }
-  return total
-}
-
-const ViewProductsPage = () => {
-  const [order, setOrder] = useState([
+const ViewQuestionsPage = () => {
+  const [question, setQuestion] = useState([
     {
-      item: [{ name: 'item-name', quantity: 3 }],
-      date: '02/09/2022',
-      time: '12:40 am',
-      id: 2,
-      customer: {
-        name: 'Kris Doe',
-        contact: '011224599',
-      },
-      quantity: 3,
+      topic: 'PS',
+      count: 1,
+      date: '27/02/2023',
     },
   ])
-  // useEffect(
-  //   () =>
-  //     onSnapshot(query(collection(db, 'order')), (orderSnapshot2) => {
-  //       const orderInfoTable = []
-  //       orderSnapshot2.forEach((orderDoc) => {
-  //         var orderInfo = orderDoc.data()
-  //         let itemArr = []
-  //         orderInfo.item.forEach((orderItem) => {
-  //           itemArr.push({ name: orderItem.name, quantity: orderItem.quantity })
-  //         })
-  //         orderInfoTable.push({
-  //           item: itemArr,
-  //           date: orderInfo.timepoint.date,
-  //           time: orderInfo.timepoint.time,
-  //           id: orderDoc.id,
-  //           customer: {
-  //             name: orderInfo.customer.name,
-  //             contact: orderInfo.customer.contact,
-  //           },
-  //           quantity: parseInt(orderInfo.item[0].quantity),
-  //         })
-  //       })
-  //       setOrder(orderInfoTable)
-  //     }),
-  //   [],
-  // )
-  const [product, setProduct] = useState([
-    {
-      item: {
-        id: 'p1235',
-        name: 'Cupcakes',
-        measurement: 'Pieces',
-        price: 100,
-      },
-      sales: [
-        {
-          date: '02/09/2022',
-          time: '12:40 am',
-          id: 2,
-          customer: {
-            name: 'Kris Doe',
-            contact: '011224599',
-          },
-          quantity: 3,
-        },
-      ],
-      itemStatus: 'menu',
-    },
-  ])
-  // useEffect(
-  //   () =>
-  //     onSnapshot(query(collection(db, 'product')), (custSnapshot) => {
-  //       const productArr = []
-  //       custSnapshot.forEach((prodDoc) => {
-  //         var prodInfo = prodDoc.data()
-  //         //get sales history
-  //         let saleList = []
-  //         order.forEach((singleOrder) => {
-  //           singleOrder.item.forEach((orderItem) => {
-  //             if (orderItem.name === prodInfo.name) {
-  //               saleList.push({
-  //                 date: singleOrder.date,
-  //                 time: singleOrder.time,
-  //                 id: singleOrder.id,
-  //                 customer: {
-  //                   name: singleOrder.name,
-  //                   contact: singleOrder.contact,
-  //                 },
-  //                 quantity: singleOrder.quantity,
-  //               })
-  //             }
-  //           })
-  //         })
-  //         productArr.push({
-  //           item: {
-  //             id: prodDoc.id,
-  //             name: prodInfo.name,
-  //             measurement: prodInfo.measurement,
-  //             price: parseInt(prodInfo.price),
-  //           },
-  //           sales: saleList,
-  //           itemStatus: prodInfo.status,
-  //         })
-  //       })
-  //       setProduct(productArr)
-  //     }),
-  //   [order],
-  // )
+  useEffect(
+    () =>
+      onSnapshot(query(collection(db, 'question')), (questionSnapshot2) => {
+        const questionInfoTable = []
+        questionSnapshot2.forEach((questionDoc) => {
+          var questionInfo = questionDoc.data()
+          questionInfoTable.push({
+            topic: questionInfo.topic,
+            count: questionInfo.count,
+            date: questionInfo.date,
+          })
+        })
+        setQuestion(questionInfoTable)
+      }),
+    [],
+  )
   return (
     <CRow>
       <CCol xs={12}>
@@ -152,20 +63,27 @@ const ViewProductsPage = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">
-                    <CAvatar color="secondary" textColor="white">
-                      #1
-                    </CAvatar>
-                  </CTableHeaderCell>
-                  <CTableDataCell>Figurative Language</CTableDataCell>
-                  <CTableDataCell>
-                    <CButton color="primary">Question Details</CButton>
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    <CButton color="primary">Answer Details</CButton>
-                  </CTableDataCell>
-                </CTableRow>
+                {question.map((ques, index) => (
+                  <CTableRow v-for="ques in tableItems" key={index}>
+                    <CTableHeaderCell scope="row">
+                      <CAvatar color="secondary" textColor="white">
+                        <div>{ques.count}</div>
+                      </CAvatar>
+                    </CTableHeaderCell>
+                    <CTableDataCell>
+                      <div>{ques.topic} </div>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      <CButton color="primary">Question Details</CButton>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      <CButton color="primary">Answer Details</CButton>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      <div>{ques.date} </div>
+                    </CTableDataCell>
+                  </CTableRow>
+                ))}
               </CTableBody>
             </CTable>
           </CCardBody>
@@ -175,4 +93,4 @@ const ViewProductsPage = () => {
   )
 }
 
-export default ViewProductsPage
+export default ViewQuestionsPage
