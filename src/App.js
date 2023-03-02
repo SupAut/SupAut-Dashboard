@@ -3,7 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 
 const loading = (
-  <div className="pt-3 text-center">
+  <div className="pt-3 text-center" data-testid="loading-spinner">
     <div className="sk-spinner sk-spinner-pulse"></div>
   </div>
 )
