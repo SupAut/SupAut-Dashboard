@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Children } from 'react'
+import { useParams } from 'react-router-dom'
+import { Routes, Navigate } from 'react-router'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
 //import db from '../../../firebase'
 import {
   CAccordion,
@@ -13,9 +17,10 @@ import {
   CTableHeaderCell,
   CTableRow,
   CBadge,
+  CButton,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilHamburgerMenu } from '@coreui/icons'
+import { cilHamburgerMenu, cilPeople } from '@coreui/icons'
 import {
   CChartBar,
   CChartDoughnut,
@@ -25,219 +30,167 @@ import {
   CChartRadar,
 } from '@coreui/react-chartjs'
 
-import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
+import {
+  CCard,
+  CCardBody,
+  CCardTitle,
+  CCardSubtitle,
+  CCardText,
+  CCardLink,
+  CCol,
+  CRow,
+} from '@coreui/react'
+//import { collection, query, onSnapshot } from 'firebase/firestore
+// useEffect(
+//   () =>
+//     onSnapshot(query(collection(db, 'order')), (orderSnapshot2) => {
+//       const orderInfoTable = []
+//       orderSnapshot2.forEach((orderDoc) => {
+//         var orderInfo = orderDoc.data()
+//         let itemArr = []
+//         orderInfo.item.forEach((orderItem) => {
+//           itemArr.push({ name: orderItem.name, quantity: orderItem.quantity })
+//         })
+//         orderInfoTable.push({
+//           item: itemArr,
+//           date: orderInfo.timepoint.date,
+//           time: orderInfo.timepoint.time,
+//           id: orderDoc.id,
+//           customer: {
+//             name: orderInfo.customer.name,
+//             contact: orderInfo.customer.contact,
+//           },
+//           quantity: parseInt(orderInfo.item[0].quantity),
+//         })
+//       })
+//       setOrder(orderInfoTable)
+//     }),
+//   [],
+// )
 
-//import { collection, query, onSnapshot } from 'firebase/firestore'
-
-function calcRevenue(sales, price) {
-  var total = 0
-  total = sales.length * price
-  for (var i = 0; i < sales.length; i++) {
-    total *= sales[i].quantity
-  }
-  return total
+// useEffect(
+//   () =>
+//     onSnapshot(query(collection(db, 'product')), (custSnapshot) => {
+//       const productArr = []
+//       custSnapshot.forEach((prodDoc) => {
+//         var prodInfo = prodDoc.data()
+//         //get sales history
+//         let saleList = []
+//         order.forEach((singleOrder) => {
+//           singleOrder.item.forEach((orderItem) => {
+//             if (orderItem.name === prodInfo.name) {
+//               saleList.push({
+//                 date: singleOrder.date,
+//                 time: singleOrder.time,
+//                 id: singleOrder.id,
+//                 customer: {
+//                   name: singleOrder.name,
+//                   contact: singleOrder.contact,
+//                 },
+//                 quantity: singleOrder.quantity,
+//               })
+//             }
+//           })
+//         })
+//         productArr.push({
+//           item: {
+//             id: prodDoc.id,
+//             name: prodInfo.name,
+//             measurement: prodInfo.measurement,
+//             price: parseInt(prodInfo.price),
+//           },
+//           sales: saleList,
+//           itemStatus: prodInfo.status,
+//         })
+//       })
+//       setProduct(productArr)
+//     }),
+//   [order],
+// )
+const handleClick = () => {
+  console.log('Download IEP Report')
 }
-
-const ViewProductsPage = () => {
-  const [order, setOrder] = useState([
-    {
-      item: [{ name: 'item-name', quantity: 3 }],
-      date: '02/09/2022',
-      time: '12:40 am',
-      id: 2,
-      customer: {
-        name: 'Kris Doe',
-        contact: '011224599',
-      },
-      quantity: 3,
-    },
-  ])
-  // useEffect(
-  //   () =>
-  //     onSnapshot(query(collection(db, 'order')), (orderSnapshot2) => {
-  //       const orderInfoTable = []
-  //       orderSnapshot2.forEach((orderDoc) => {
-  //         var orderInfo = orderDoc.data()
-  //         let itemArr = []
-  //         orderInfo.item.forEach((orderItem) => {
-  //           itemArr.push({ name: orderItem.name, quantity: orderItem.quantity })
-  //         })
-  //         orderInfoTable.push({
-  //           item: itemArr,
-  //           date: orderInfo.timepoint.date,
-  //           time: orderInfo.timepoint.time,
-  //           id: orderDoc.id,
-  //           customer: {
-  //             name: orderInfo.customer.name,
-  //             contact: orderInfo.customer.contact,
-  //           },
-  //           quantity: parseInt(orderInfo.item[0].quantity),
-  //         })
-  //       })
-  //       setOrder(orderInfoTable)
-  //     }),
-  //   [],
-  // )
-  const [product, setProduct] = useState([
-    {
-      item: {
-        id: 'p1235',
-        name: 'Cupcakes',
-        measurement: 'Pieces',
-        price: 100,
-      },
-      sales: [
-        {
-          date: '02/09/2022',
-          time: '12:40 am',
-          id: 2,
-          customer: {
-            name: 'Kris Doe',
-            contact: '011224599',
-          },
-          quantity: 3,
-        },
-      ],
-      itemStatus: 'menu',
-    },
-  ])
-  // useEffect(
-  //   () =>
-  //     onSnapshot(query(collection(db, 'product')), (custSnapshot) => {
-  //       const productArr = []
-  //       custSnapshot.forEach((prodDoc) => {
-  //         var prodInfo = prodDoc.data()
-  //         //get sales history
-  //         let saleList = []
-  //         order.forEach((singleOrder) => {
-  //           singleOrder.item.forEach((orderItem) => {
-  //             if (orderItem.name === prodInfo.name) {
-  //               saleList.push({
-  //                 date: singleOrder.date,
-  //                 time: singleOrder.time,
-  //                 id: singleOrder.id,
-  //                 customer: {
-  //                   name: singleOrder.name,
-  //                   contact: singleOrder.contact,
-  //                 },
-  //                 quantity: singleOrder.quantity,
-  //               })
-  //             }
-  //           })
-  //         })
-  //         productArr.push({
-  //           item: {
-  //             id: prodDoc.id,
-  //             name: prodInfo.name,
-  //             measurement: prodInfo.measurement,
-  //             price: parseInt(prodInfo.price),
-  //           },
-  //           sales: saleList,
-  //           itemStatus: prodInfo.status,
-  //         })
-  //       })
-  //       setProduct(productArr)
-  //     }),
-  //   [order],
-  // )
+const handleClickAgain = () => {
+  console.log('Send IEP Report')
+}
+function StudentDetails(props) {
+  const { id } = useParams()
   return (
-    <CRow>
-      <CCol xs={6}>
-        <CCard className="mb-4">
-          <CCardBody>
-            <CChartDoughnut
-              data={{
-                labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
-                datasets: [
-                  {
-                    backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                    data: [40, 20, 80, 10],
-                  },
-                ],
-              }}
-            />
-          </CCardBody>
-        </CCard>
-        <CCard className="mb-4">
-          <CCardBody>
-            <CTable align="middle" className="mb-0 border" responsive>
-              <CTableHead color="light">
-                <CTableRow>
-                  <CTableHeaderCell className="text-center">
-                    <CIcon icon={cilHamburgerMenu} />
-                  </CTableHeaderCell>
-                  <CTableHeaderCell>Item</CTableHeaderCell>
-                  <CTableHeaderCell className="text-center">Total Revenue</CTableHeaderCell>
-                  <CTableHeaderCell>Sales History</CTableHeaderCell>
-                  <CTableHeaderCell>Item Sale</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {product.map((prod, index) => (
-                  <CTableRow v-for="cust in tableItems" key={index}>
-                    {/* Avatar */}
-                    <CTableDataCell className="text-center">
-                      <CAvatar
-                        size="md"
-                        src={`https://ui-avatars.com/api/?background=random&rounded=true&bold=true&name=${prod.item.id}`}
-                      />
-                    </CTableDataCell>
-                    {/* Item */}
-                    <CTableDataCell>
-                      <div>{prod.item.name}</div>
-                      <div className="small text-medium-emphasis">
-                        <CBadge color={prod.itemStatus === 'menu' ? 'info' : 'warning'}>
-                          {prod.itemStatus}
-                        </CBadge>
-                      </div>
-                    </CTableDataCell>
-                    {/* Total Revenue */}
-                    <CTableDataCell className="text-center">
-                      ${calcRevenue(prod.sales, prod.item.price)}
-                    </CTableDataCell>
-                    {/* Sales History */}
-                    {/* Purchase History */}
-                    <CTableDataCell className="text-center">
-                      {prod.sales.map((purchase, index) => (
-                        <CAccordion v-for="purchase in cust" key={index} flush>
-                          <CAccordionItem itemKey={index}>
-                            <CAccordionHeader>{purchase.date}</CAccordionHeader>
-                            <CAccordionBody>
-                              <CTable borderless small>
-                                <CTableBody>
-                                  <CTableRow v-for="item in tableItems" key={index}>
-                                    <CTableHeaderCell scope="row">
-                                      Order No.{purchase.id}
-                                    </CTableHeaderCell>
-                                    <CTableDataCell className="text-center">
-                                      <small>{purchase.customer.name}</small> -{' '}
-                                      {purchase.customer.contact}
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                      {' '}
-                                      Ordered Quantity : {purchase.quantity}
-                                    </CTableDataCell>
-                                  </CTableRow>
-                                </CTableBody>
-                              </CTable>
-                            </CAccordionBody>
-                          </CAccordionItem>
-                        </CAccordion>
-                      ))}
-                    </CTableDataCell>
-                    {/* Item Sale */}
-                    <CTableDataCell>
-                      ${prod.item.price} / {prod.item.measurement}
-                    </CTableDataCell>
-                  </CTableRow>
-                ))}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+    <div>
+      <h1>Student Details</h1>
+      <p>ID: {id}</p>
+    </div>
   )
 }
 
+;<CRow xs={{ cols: 2 }} md={{ cols: 2 }}>
+  <CCol xs={12}>
+    <CCard className="mb-4">
+      <CCardBody>
+        <h2>
+          <CIcon icon={cilPeople} height={36} style={{ marginRight: '20px' }} />
+          Student Details
+          <p>ID : {1}</p>
+        </h2>
+        <br />
+        <div style={{ margin: '50px 0 30px 0' }}>
+          <h5 style={{ width: '280px', display: 'inline-block' }}>Student Name</h5>
+          <h5 style={{ display: 'inline-block' }}>: John Doe</h5>
+        </div>
+        <div style={{ margin: '30px 0' }}>
+          <h5 style={{ width: '280px', display: 'inline-block' }}>Student Contact Number</h5>
+          <h5 style={{ display: 'inline-block' }}>: 0789095692</h5>
+        </div>
+        <div style={{ margin: '30px 0' }}>
+          <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Name</h5>
+          <h5 style={{ display: 'inline-block' }}>: Jane Doe</h5>
+        </div>
+        <div style={{ margin: '30px 0' }}>
+          <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Contact Number</h5>
+          <h5 style={{ display: 'inline-block' }}>: 0789095697</h5>
+        </div>
+        <div style={{ margin: '30px 0' }}>
+          <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Email Address</h5>
+          <h5 style={{ display: 'inline-block' }}>: janedoe@gmail.com</h5>
+        </div>
+        <CCol xs={12}>
+          <br />
+          <CButton
+            color="primary"
+            size="md"
+            style={{ marginRight: '200px' }}
+            button
+            onClick={handleClick}
+          >
+            Download IEP Report
+          </CButton>
+          <CButton color="primary" size="md" button onClick={handleClickAgain('Send IEP Report')}>
+            Send IEP Report
+          </CButton>
+        </CCol>
+      </CCardBody>
+    </CCard>
+  </CCol>
+  <CCol xs={12}>
+    <CCard className="mb-4">
+      <CCardBody>
+        <h2 style={{ marginBottom: '50px' }}>Progress of Student Skills</h2>
+        <CChartPie
+          width={700}
+          height={500}
+          data={{
+            labels: ['Creativity', 'Time management', 'Logical Skills', 'Visual Skills'],
+            datasets: [
+              {
+                backgroundColor: ['#ffc107', '#6610f2', '#00D8FF', '#DD1B16'],
+                data: [40, 20, 80, 10],
+              },
+            ],
+          }}
+        />
+      </CCardBody>
+    </CCard>
+  </CCol>
+</CRow>
+// eslint-disable-next-line no-undef
 export default ViewProductsPage
