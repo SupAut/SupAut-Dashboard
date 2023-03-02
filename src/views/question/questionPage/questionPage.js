@@ -9,6 +9,11 @@ import {
   CAccordionItem,
   CAvatar,
   CButton,
+  CModal,
+  CModalHeader,
+  CModalTitle,
+  CModalBody,
+  CModalFooter,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -23,11 +28,17 @@ import { cilHamburgerMenu } from '@coreui/icons'
 import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react'
 
 const ViewQuestionsPage = () => {
+  const [visible, setVisible] = useState(false)
   const [question, setQuestion] = useState([
     {
+      class: '6',
       topic: 'PS',
       count: 1,
       date: '27/02/2023',
+      description: 'This question is from the topic of chemistry and elements.',
+      modelAnswer: 'Au',
+      question: 'What is the chemical symbol for gold?',
+      score: '10',
     },
   ])
   useEffect(
@@ -37,9 +48,14 @@ const ViewQuestionsPage = () => {
         questionSnapshot2.forEach((questionDoc) => {
           var questionInfo = questionDoc.data()
           questionInfoTable.push({
+            class: questionInfo.class,
             topic: questionInfo.topic,
             count: questionInfo.count,
             date: questionInfo.date,
+            decription: questionInfo.description,
+            modelAnswer: questionInfo.modelAnswer,
+            question: questionInfo.question,
+            score: questionInfo.score,
           })
         })
         setQuestion(questionInfoTable)
@@ -74,7 +90,30 @@ const ViewQuestionsPage = () => {
                       <div>{ques.topic} </div>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <CButton color="primary">Question Details</CButton>
+                      {/* <CButton color="primary">Question Details</CButton> */}
+                      <CButton onClick={() => setVisible(!visible)}>Question Details</CButton>
+                      <CModal
+                        alignment="center"
+                        visible={visible}
+                        onClose={() => setVisible(false)}
+                      >
+                        <CModalHeader>
+                          <CModalTitle>Question Detail {ques.topic}</CModalTitle>
+                        </CModalHeader>
+                        <CModalBody>
+                          <p>Class: {ques.class}</p>
+                          <p>Question Number: {ques.count}</p>
+                          <p>Class: {ques.class}</p>
+                          <p>Question: {ques.question}</p>
+                          <p>Description: {ques.description}</p>
+                          <p>Model Answer: {ques.modelAnswer}</p>
+                        </CModalBody>
+                        <CModalFooter>
+                          <CButton color="secondary" onClick={() => setVisible(false)}>
+                            Close
+                          </CButton>
+                        </CModalFooter>
+                      </CModal>
                     </CTableDataCell>
                     <CTableDataCell>
                       <CButton color="primary">Answer Details</CButton>
