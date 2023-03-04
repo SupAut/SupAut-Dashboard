@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 import { CButton, CCol, CRow, CWidgetStatsC } from '@coreui/react'
 import { CChart } from '@coreui/react-chartjs'
 import CIcon from '@coreui/icons-react'
@@ -14,7 +14,7 @@ const Dashboard = () => {
           icon={<CIcon icon={cilPeople} height={36} />}
           progress={{ value: 50 }}
           text="Widget helper text"
-          title="Visitors"
+          title="Students"
           value="152"
         />
       </CCol>
@@ -48,7 +48,7 @@ const Dashboard = () => {
           inverse
           progress={{ value: 50 }}
           text="Widget helper text"
-          title="Modules"
+          title="Topics"
           value="8"
         />
       </CCol>
@@ -60,7 +60,7 @@ const Dashboard = () => {
             datasets: [
               {
                 label: 'Modules',
-                data: [40, 20, 12, 39, 10, 40, 39, 80, 40],
+                data: [40, 20, 12, 39, 10, 40, 39],
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(255, 159, 64, 0.2)',
@@ -136,12 +136,16 @@ const Dashboard = () => {
       <CCol xs={12}>
         {' '}
         <br />
-        <CButton color="primary" className="float-end" size="md">
-          Add Student
-        </CButton>{' '}
-        <CButton color="primary" size="md">
-          Add Question
-        </CButton>
+        <Link to="/student/addStudent">
+          <CButton color="primary" className="float-end" size="md">
+            Add Question
+          </CButton>
+        </Link>{' '}
+        <Link to="/question/addQuestion">
+          <CButton color="primary" size="md">
+            Add Question
+          </CButton>
+        </Link>
       </CCol>
     </CRow>
   )
