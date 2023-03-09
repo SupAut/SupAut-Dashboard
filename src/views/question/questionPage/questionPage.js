@@ -1,12 +1,8 @@
-import { collection, query, onSnapshot, setDoc, doc, getDocs } from 'firebase/firestore'
+import { collection, query, onSnapshot } from 'firebase/firestore'
 import db from '../../../firebase'
 import React, { useState, useEffect } from 'react'
 //import db from '../../../firebase'
 import {
-  CAccordion,
-  CAccordionBody,
-  CAccordionHeader,
-  CAccordionItem,
   CAvatar,
   CButton,
   CModal,
@@ -20,15 +16,13 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-  CBadge,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilHamburgerMenu } from '@coreui/icons'
 
 import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react'
 
 const ViewQuestionsPage = () => {
   const [visible, setVisible] = useState(false)
+  const [vis, setVis] = useState(false)
   const [question, setQuestion] = useState([
     {
       class: '6',
@@ -62,13 +56,38 @@ const ViewQuestionsPage = () => {
       }),
     [],
   )
+  const [answer, setAnswer] = useState([
+    {
+      question: 'What is the chemical symbol for gold?',
+      answer: 'hehe',
+      student: 'zainab',
+      timestamp: '22/03/2023',
+    },
+  ])
+  useEffect(
+    () =>
+      onSnapshot(query(collection(db, 'answer')), (answerSnapshot2) => {
+        const answerInfoTable = []
+        answerSnapshot2.forEach((answerDoc) => {
+          var answerInfo = answerDoc.data()
+          answerInfoTable.push({
+            question: answerInfo.question,
+            answer: answerInfo.answer,
+            student: answerInfo.student,
+            timestamp: answerInfo.timestamp,
+          })
+        })
+        setAnswer(answerInfoTable)
+      }),
+    [],
+  )
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>Questions List Group</CCardHeader>
           <CCardBody>
-            <CTable>
+            <CTable align="middle" className="mb-0 border" responsive>
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -116,7 +135,34 @@ const ViewQuestionsPage = () => {
                       </CModal>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <CButton color="primary">Answer Details</CButton>
+                      <CButton onClick={() => setVis(!vis)}>Answer Details</CButton>
+                      {answer.map((ans, ind) => (
+                        <>
+                          <CModal
+                            alignment="center"
+                            visible={vis}
+                            onClose={() => setVis(false)}
+                            v-for="ans in tableItems"
+                            key={ind}
+                          >
+                            <CModalHeader>
+                              <CModalTitle>Answer Detail {ques.topic}</CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+                              <p>Question: {ans.question}</p>
+                              <p>Answer: {ans.answer}</p>
+                              <p>Student: {ans.student}</p>
+                              <p>timestamp: {ans.timestamp}</p>
+                            </CModalBody>
+                            <CModalFooter>
+                              <CButton color="secondary" onClick={() => setVis(false)}>
+                                Close
+                              </CButton>
+                            </CModalFooter>
+                          </CModal>
+                        </>
+                      ))}
+                      {/* <CButton color="primary">Answer Details</CButton> */}
                     </CTableDataCell>
                     <CTableDataCell>
                       <div>{ques.date} </div>
