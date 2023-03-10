@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.5.2 # Updated to latest version that supports Node.js 16
+        uses: actions/checkout@v2
+        with:
+         ref: 'test-master'
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
