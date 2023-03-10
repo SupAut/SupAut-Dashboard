@@ -1,25 +1,23 @@
 name: Continuous Integration and Delivery
 on:
   push:
-    branches: [main]
-      
+    branches: [main, staging]
+
 jobs:
   test_and_build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-         ref: 'test-master'
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
       - name: Run npm install, test and build
         run: |
-          npm ci 
+          npm cache clear --force
+          npm i --force
+          npm ci --force
           npm test
           npm run build
+        env:
+          CI: false
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
@@ -33,11 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.5.2 # Updated to latest version that supports Node.js 16
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
+        uses: actions/checkout@v2
       - name: Download build artifact
         uses: actions/download-artifact@v2
         with:
@@ -47,6 +41,9 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_372209 }}'
+          firebaseServiceAccount: >-
+            ${{ FIREBASE_SERVICE_ACCOUNT_SUPAUT_372209 
+            }}
           channelId: live
           projectId: supaut-372209
+          
