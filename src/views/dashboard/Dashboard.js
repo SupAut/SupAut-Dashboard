@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { CButton, CCol, CRow, CWidgetStatsC } from '@coreui/react'
 import { CChart } from '@coreui/react-chartjs'
 import CIcon from '@coreui/icons-react'

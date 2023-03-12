@@ -30,8 +30,14 @@ function AddStudentPage() {
       name: insertName,
       contact: insertContact,
       class: insertClass,
-      caregiverContact: insertCaregiverContact,
-      caregiverEmail: insertCaregiverEmail,
+      careGiverContact: insertCaregiverContact,
+      careGiverEmail: insertCaregiverEmail,
+      skill: {
+        creativity: '0',
+        logical: '0',
+        time: '0',
+        visual: '0',
+      },
     })
 
     // clearing all the fields after backend implementation
