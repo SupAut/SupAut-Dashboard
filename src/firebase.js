@@ -3,7 +3,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 const firebaseConfig = {
-  apiKey: '',
+  apiKey: 'AIzaSyCgP_Mr6_H5ewZD6Sphr1NMxIumgZphh90',
   authDomain: 'supaut-372209.firebaseapp.com',
   projectId: 'supaut-372209',
   storageBucket: 'supaut-372209.appspot.com',

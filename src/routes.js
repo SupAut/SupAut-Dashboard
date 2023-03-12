@@ -9,6 +9,7 @@ const QuestionPage = React.lazy(() => import('./views/question/questionPage/ques
 // Student
 const AddStudent = React.lazy(() => import('./views/student/addStudent/addStudent'))
 const StudentPage = React.lazy(() => import('./views/student/studentPage/studentPage'))
+const StudentSinglePage = React.lazy(() => import('./views/student/studentPage/studentSinglePage'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
@@ -20,6 +21,11 @@ const routes = [
   { path: '/question/addQuestion', name: 'Add Question', element: AddQuestion },
   { path: '/student', name: 'Student', element: StudentPage, exact: true },
   { path: '/student/studentPage', name: 'Student Page', element: StudentPage },
+  {
+    path: '/student/studentSinglePage',
+    name: 'Student Single Page',
+    element: StudentSinglePage,
+  },
   { path: '/student/addStudent', name: 'Add Student', element: AddStudent },
   { path: '/widgets', name: 'Widgets', element: Widgets },
 ]

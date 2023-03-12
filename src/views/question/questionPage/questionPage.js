@@ -1,7 +1,6 @@
 import { collection, query, onSnapshot, setDoc, doc, getDocs } from 'firebase/firestore'
 import db from '../../../firebase'
 import React, { useState, useEffect } from 'react'
-//import db from '../../../firebase'
 import {
   CAccordion,
   CAccordionBody,
@@ -16,11 +15,14 @@ import {
   CTableHeaderCell,
   CTableRow,
   CBadge,
+  CCard,
+  CCardHeader,
+  CCardBody,
+  CCol,
+  CRow,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilHamburgerMenu } from '@coreui/icons'
-
-import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react'
 
 const ViewQuestionsPage = () => {
   const [question, setQuestion] = useState([
