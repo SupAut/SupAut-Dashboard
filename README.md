@@ -11,7 +11,7 @@ git switch -c added-chart
 Make the changes 
 
 ```
-git status
+git statu
 ```
 ```
 git add src/views/student/studentPage/studentPage.js
