@@ -35,11 +35,10 @@ const AppContent = () => {
             )
           })}
           <Route path="/" element={<Navigate to="dashboard" replace />} />
-          {/* <Route path="/student/:id" element={<StudentSinglePage />} /> */}
           <Route path="/student">
             <Route index element={<StudentPage />} />
             <Route
-              path=":id/:grade/:name/:contact/:careGiverEmail"
+              path=":id/:grade/:name/:contact/:careGiverEmail/:careGiverContact/:creativity/:logical/:time/:visual"
               element={<StudentSinglePage />}
             />
           </Route>

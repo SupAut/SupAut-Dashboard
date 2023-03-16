@@ -16,6 +16,8 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilHamburgerMenu } from '@coreui/icons'
+import { Link } from 'react-router-dom'
+import { CButton } from '@coreui/react/dist'
 
 const StudentPage = () => {
   const [student, setStudent] = useState([
@@ -70,6 +72,7 @@ const StudentPage = () => {
                   <CTableHeaderCell className="text-center">Care Giver Contact</CTableHeaderCell>
                   <CTableHeaderCell>Care Giver Email</CTableHeaderCell>
                   <CTableHeaderCell>Care Giver Details</CTableHeaderCell>
+                  <CTableHeaderCell>Student Profile Page</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -100,6 +103,15 @@ const StudentPage = () => {
                     {/* caregiver details */}
                     <CTableDataCell>
                       {student.careGiverContact} | {student.careGiverEmail}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      <Link
+                        to={`/student/${student.id}/${student.class}/${student.name}/${student.contact}/${student.careGiverEmail}/${student.careGiverContact}/${student.skill.creativity}/${student.skill.logical}/${student.skill.time}/${student.skill.visual}`}
+                      >
+                        <CButton color="primary" variant="outline">
+                          Go to Page
+                        </CButton>
+                      </Link>
                     </CTableDataCell>
                   </CTableRow>
                 ))}

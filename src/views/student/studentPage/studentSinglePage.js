@@ -12,7 +12,18 @@ function StudentSinglePage() {
   const handleClickAgain = () => {
     console.log('Send IEP Report')
   }
-  const { id, grade, name, contact, careGiverEmail } = useParams()
+  const {
+    id,
+    grade,
+    name,
+    contact,
+    careGiverEmail,
+    careGiverContact,
+    creativity,
+    logical,
+    time,
+    visual,
+  } = useParams()
   return (
     <>
       <CRow xs={{ cols: 2 }} md={{ cols: 2 }}>
@@ -41,7 +52,7 @@ function StudentSinglePage() {
                 <h5 style={{ width: '280px', display: 'inline-block' }}>
                   Caregiver Contact Number
                 </h5>
-                <h5 style={{ display: 'inline-block' }}>: 0789095697</h5>
+                <h5 style={{ display: 'inline-block' }}>: {careGiverContact}</h5>
               </div>
               <div style={{ margin: '30px 0' }}>
                 <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Email Address</h5>
@@ -82,7 +93,12 @@ function StudentSinglePage() {
                   datasets: [
                     {
                       backgroundColor: ['#ffc107', '#6610f2', '#00D8FF', '#DD1B16'],
-                      data: [40, 20, 80, 10],
+                      data: [
+                        parseInt(creativity),
+                        parseInt(time),
+                        parseInt(logical),
+                        parseInt(visual),
+                      ],
                     },
                   ],
                 }}
