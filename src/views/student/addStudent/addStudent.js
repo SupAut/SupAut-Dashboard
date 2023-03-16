@@ -72,7 +72,6 @@ function AddStudentPage() {
                 <CCol md={12}>
                   <CFormLabel htmlFor="validationCustom01">Student Name</CFormLabel>
                   <CFormInput
-                    label="First name"
                     type="text"
                     id="validationCustom01"
                     required
