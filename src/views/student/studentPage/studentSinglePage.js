@@ -45,6 +45,10 @@ function StudentSinglePage() {
                 <h5 style={{ display: 'inline-block' }}>: {contact}</h5>
               </div>
               <div style={{ margin: '30px 0' }}>
+                <h5 style={{ width: '280px', display: 'inline-block' }}>Grade</h5>
+                <h5 style={{ display: 'inline-block' }}>: {grade}</h5>
+              </div>
+              <div style={{ margin: '30px 0' }}>
                 <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Name</h5>
                 <h5 style={{ display: 'inline-block' }}>: Jane Doe</h5>
               </div>
