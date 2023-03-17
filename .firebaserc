@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "supaut-372209"
-  }
+    "default": "supaut-372209",
+    "staging": "supaut-staging"
+  },
+  "targets": {},
+  "etags": {}
 }
