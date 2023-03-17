@@ -1,8 +1,8 @@
 name: Continuous Integration and Delivery
 on:
   push:
-    branches: [main,staging]
-      
+    branches: [main, staging]
+
 jobs:
   test_and_build:
     runs-on: ubuntu-latest
@@ -10,10 +10,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run npm install, test and build
-        run: 
-          npm ci 
+        run: |
+          npm install -g npm@9.6.2
+          npm cache clear --force
+          npm i --force
+          npm ci --force
           npm test
           npm run build
+        env:
+          CI: false
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
@@ -57,6 +62,9 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}'
+          firebaseServiceAccount: >-
+            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING
+            }}
           channelId: live
           projectId: supaut-staging
+          
