@@ -63,8 +63,6 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: >-
-            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING
-            }}
+            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}
           channelId: live
           projectId: supaut-staging
-          
