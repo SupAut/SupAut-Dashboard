@@ -45,6 +45,10 @@ function StudentSinglePage() {
                 <h5 style={{ display: 'inline-block' }}>: {contact}</h5>
               </div>
               <div style={{ margin: '30px 0' }}>
+                <h5 style={{ width: '280px', display: 'inline-block' }}>Grade</h5>
+                <h5 style={{ display: 'inline-block' }}>: {grade}</h5>
+              </div>
+              <div style={{ margin: '30px 0' }}>
                 <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Name</h5>
                 <h5 style={{ display: 'inline-block' }}>: Jane Doe</h5>
               </div>
@@ -60,23 +64,31 @@ function StudentSinglePage() {
               </div>
               <CCol xs={12}>
                 <br />
-                <CButton
-                  color="primary"
-                  size="lg"
-                  style={{ marginRight: '200px' }}
-                  button={'value'.toString()}
-                  onClick={handleClick}
-                >
-                  Download IEP Report
-                </CButton>
-                <CButton
-                  color="primary"
-                  size="lg"
-                  button={'value'.toString()}
-                  onClick={handleClickAgain()}
-                >
-                  Send IEP Report
-                </CButton>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <CButton
+                    color="primary"
+                    size="lg"
+                    style={{
+                      marginRight: '150px',
+                      width: '280px',
+                      height: '50px',
+                      fontSize: '15px',
+                    }}
+                    button={'value'.toString()}
+                    onClick={handleClick}
+                  >
+                    Download IEP Report
+                  </CButton>
+                  <CButton
+                    color="primary"
+                    size="lg"
+                    style={{ width: '280px', height: '50px', fontSize: '15px' }}
+                    button={'value'.toString()}
+                    onClick={handleClickAgain()}
+                  >
+                    Create IEP Report
+                  </CButton>
+                </div>
               </CCol>
             </CCardBody>
           </CCard>
