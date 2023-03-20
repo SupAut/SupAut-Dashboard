@@ -2,7 +2,9 @@ name: Continuous Integration and Delivery
 
 on:
   push:
-    branches: [main, staging]
+    branches:
+      - main
+      - staging
 
 jobs:
   test_and_build:
@@ -15,10 +17,14 @@ jobs:
       - name: Test
         run: npm test
       - name: Build
-        run: npm run build
+        run: |
+          if [ ${{ github.ref }} = 'refs/heads/staging' ]; then
+            GENERATE_SOURCEMAP=false npm run build
+          else
+            npm run build
+          fi
         env:
           CI: false
-          GENERATE_SOURCEMAP: false
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
@@ -38,11 +44,11 @@ jobs:
         with:
           name: build
           path: build
-      - name: Deploy to firebase hosting
+      - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_372209 }}'
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_372209 }}
           channelId: live
           projectId: supaut-372209
 
@@ -58,13 +64,13 @@ jobs:
         with:
           name: build
           path: build
-      - name: Deploy to firebase hosting
+      - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: >-
-            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}
           channelId: live
           projectId: supaut-staging
+
 
 
