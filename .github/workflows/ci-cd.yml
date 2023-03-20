@@ -17,7 +17,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          CI: true
+          CI: false
           GENERATE_SOURCEMAP: false
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
