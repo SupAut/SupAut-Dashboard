@@ -31,6 +31,26 @@ jobs:
           name: build
           path: build
           retention-days: 1
+          
+  deploy_to_staging:
+    if: github.ref == 'refs/heads/staging'
+    needs: test_and_build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}
+          channelId: live
+          projectId: supaut-staging
 
   deploy_to_production:
     if: github.ref == 'refs/heads/main'
@@ -52,25 +72,7 @@ jobs:
           channelId: live
           projectId: supaut-372209
 
-  deploy_to_staging:
-    if: github.ref == 'refs/heads/staging'
-    needs: test_and_build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Download build artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}
-          channelId: live
-          projectId: supaut-staging
+
 
 
 
