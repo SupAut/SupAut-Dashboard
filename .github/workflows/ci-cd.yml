@@ -33,7 +33,7 @@ jobs:
           retention-days: 1
           
   deploy_to_staging:
-    if: github.ref == 'refs/heads/staging'
+    if: github.ref == 'refs/heads/main'
     needs: test_and_build
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +53,7 @@ jobs:
           projectId: supaut-staging
 
   deploy_to_production:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/staging'
     needs: test_and_build
     runs-on: ubuntu-latest
     steps:
