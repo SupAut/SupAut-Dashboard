@@ -38,13 +38,13 @@ const ViewQuestionsPage = () => {
   useEffect(
     () =>
       onSnapshot(query(collection(db, 'question')), (questionSnapshot2) => {
-        const questionInfoTable = []
+        var questionInfoTable = []
         questionSnapshot2.forEach((questionDoc) => {
           var questionInfo = questionDoc.data()
           questionInfoTable.push({
             class: questionInfo.class,
             topic: questionInfo.topic,
-            count: questionInfo.count,
+            count: parseInt(questionInfo.count),
             date: questionInfo.date,
             decription: questionInfo.description,
             modelAnswer: questionInfo.modelAnswer,
@@ -52,6 +52,7 @@ const ViewQuestionsPage = () => {
             score: questionInfo.score,
           })
         })
+        questionInfoTable = questionInfoTable.sort((a, b) => a.count - b.count) // sort by count
         setQuestion(questionInfoTable)
       }),
     [],
