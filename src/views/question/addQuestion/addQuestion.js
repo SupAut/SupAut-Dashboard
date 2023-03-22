@@ -17,7 +17,7 @@ import {
 
 function AddQuestionPage() {
   const [insertGrade, setInsertGrade] = useState('')
-  const [insertChapter, setInsertChapter] = useState('')
+  const [insertTopic, setInsertTopic] = useState('')
   const [insertQuestion, setInsertQuestion] = useState('')
   const [insertDescription, setInsertDescription] = useState('')
   const [insertModelAnswer, setInsertModelAnswer] = useState('')
@@ -25,21 +25,28 @@ function AddQuestionPage() {
   // this is the insert method
   const insertRecord = async () => {
     console.log('Insert record')
+    var currentdate = new Date()
+    var question_date = `${currentdate.getDate()}/${
+      currentdate.getMonth() + 1
+    }/${currentdate.getFullYear()}`
+
     const getQuestionSize = await getDocs(collection(db, 'question'))
     const questionRef = collection(db, 'question')
     let questionSize = getQuestionSize.size + 1
     await setDoc(doc(questionRef, `${questionSize}`), {
+      count: questionSize,
       class: insertGrade,
-      topic: insertChapter,
+      topic: insertTopic,
       question: insertQuestion,
       description: insertDescription,
       modelAnswer: insertModelAnswer,
       score: insertScore,
+      date: question_date,
     })
 
     // clearing all the fields after backend implementation
     setInsertGrade('')
-    setInsertChapter('')
+    setInsertTopic('')
     setInsertQuestion('')
     setInsertDescription('')
     setInsertModelAnswer('')
@@ -48,10 +55,11 @@ function AddQuestionPage() {
 
   const [validated, setValidated] = useState(false)
   const handleSubmit = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
     const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
+    if (form.checkValidity()) {
+      insertRecord()
     }
     setValidated(true)
   }
@@ -65,7 +73,7 @@ function AddQuestionPage() {
                 className="row g-3 needs-validation"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmit && insertRecord}
+                onSubmit={handleSubmit}
               >
                 <CCol md={6}>
                   <CFormLabel htmlFor="validationCustom04" id="grade">
@@ -106,8 +114,8 @@ function AddQuestionPage() {
                     type="text"
                     id="validationCustom01"
                     required
-                    value={insertChapter}
-                    onChange={(e) => setInsertChapter(e.target.value)}
+                    value={insertTopic}
+                    onChange={(e) => setInsertTopic(e.target.value)}
                   />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
