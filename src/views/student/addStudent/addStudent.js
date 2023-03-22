@@ -50,10 +50,11 @@ function AddStudentPage() {
 
   const [validated, setValidated] = useState(false)
   const handleSubmit = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
     const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
+    if (form.checkValidity()) {
+      insertRecord()
     }
     setValidated(true)
   }
@@ -67,7 +68,7 @@ function AddStudentPage() {
                 className="row g-3 needs-validation"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmit && insertRecord}
+                onSubmit={handleSubmit}
               >
                 <CCol md={12}>
                   <CFormLabel htmlFor="validationCustom01">Student Name</CFormLabel>
