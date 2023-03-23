@@ -1,8 +1,8 @@
 import CIcon from '@coreui/icons-react'
-import { cilPeople } from '@coreui/icons'
+import { cilPeople, cilGraph } from '@coreui/icons'
 import { CChartPie } from '@coreui/react-chartjs'
 import React from 'react'
-import { CButton, CCard, CCardBody, CCol, CRow } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCol, CRow, CCardHeader } from '@coreui/react'
 import { useParams } from 'react-router-dom'
 
 function StudentSinglePage() {
@@ -29,51 +29,37 @@ function StudentSinglePage() {
       <CRow xs={{ cols: 2 }} md={{ cols: 2 }}>
         <CCol xs={12}>
           <CCard className="mb-4">
-            <CCardBody>
-              <h2>
-                <CIcon icon={cilPeople} height={36} style={{ marginRight: '20px' }} />
-                Student Details
-                <p>ID : {id}</p>
-              </h2>
-              <br />
-              <div style={{ margin: '50px 0 30px 0' }}>
-                <h5 style={{ width: '280px', display: 'inline-block' }}>Student Name</h5>
-                <h5 style={{ display: 'inline-block' }}>: {name} </h5>
+            <CCardHeader component="h5" className="p-3">
+              <span className="p-3">
+                <CIcon icon={cilPeople} size="xxl" />
+              </span>
+              <span className="h3">Student Details</span>
+
+              <p className="float-end h4 p-2">ID : {id}</p>
+            </CCardHeader>
+            <CCardBody style={{ fontSize: '1.2rem' }}>
+              <div className="p-3">
+                Student Name: <span className="float-end sm">{name}</span>
               </div>
-              <div style={{ margin: '30px 0' }}>
-                <h5 style={{ width: '280px', display: 'inline-block' }}>Student Contact Number</h5>
-                <h5 style={{ display: 'inline-block' }}>: {contact}</h5>
+              <div className="p-3">
+                Student Contact Number: <span className="float-end">{contact}</span>
               </div>
-              <div style={{ margin: '30px 0' }}>
-                <h5 style={{ width: '280px', display: 'inline-block' }}>Grade</h5>
-                <h5 style={{ display: 'inline-block' }}>: {grade}</h5>
+              <div className="p-3">
+                Grade: <span className="float-end">{grade}</span>
               </div>
-              <div style={{ margin: '30px 0' }}>
-                <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Name</h5>
-                <h5 style={{ display: 'inline-block' }}>: Jane Doe</h5>
+              <div className="p-3">
+                Caregiver Contact Number: <span className="float-end">{careGiverContact}</span>
               </div>
-              <div style={{ margin: '30px 0' }}>
-                <h5 style={{ width: '280px', display: 'inline-block' }}>
-                  Caregiver Contact Number
-                </h5>
-                <h5 style={{ display: 'inline-block' }}>: {careGiverContact}</h5>
-              </div>
-              <div style={{ margin: '30px 0' }}>
-                <h5 style={{ width: '280px', display: 'inline-block' }}>Caregiver Email Address</h5>
-                <h5 style={{ display: 'inline-block' }}>: {careGiverEmail}</h5>
+              <div className="p-3">
+                Caregiver Email Address: <span className="float-end">{careGiverEmail}</span>
               </div>
               <CCol xs={12}>
                 <br />
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <div className="p-2">
                   <CButton
                     color="primary"
-                    size="lg"
-                    style={{
-                      marginRight: '150px',
-                      width: '280px',
-                      height: '50px',
-                      fontSize: '15px',
-                    }}
+                    variant="outline"
+                    size="md"
                     button={'value'.toString()}
                     onClick={handleClick}
                   >
@@ -81,10 +67,11 @@ function StudentSinglePage() {
                   </CButton>
                   <CButton
                     color="primary"
-                    size="lg"
-                    style={{ width: '280px', height: '50px', fontSize: '15px' }}
+                    variant="outline"
+                    size="md"
                     button={'value'.toString()}
                     onClick={handleClickAgain()}
+                    className="float-end"
                   >
                     Create IEP Report
                   </CButton>
@@ -95,11 +82,17 @@ function StudentSinglePage() {
         </CCol>
         <CCol xs={12}>
           <CCard className="mb-4">
+            <CCardHeader component="h5" className="p-3">
+              <span className="p-3">
+                <CIcon icon={cilGraph} size="xxl" />
+              </span>
+              <span className="h3">Progress of Student Skills</span>
+            </CCardHeader>
             <CCardBody>
-              <h2 style={{ marginBottom: '50px' }}>Progress of Student Skills</h2>
               <CChartPie
                 width={700}
                 height={500}
+                className="p-2"
                 data={{
                   labels: ['Creativity', 'Time management', 'Logical Skills', 'Visual Skills'],
                   datasets: [
