@@ -1,11 +1,49 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { CButton, CCol, CRow, CWidgetStatsC } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCol, CRow, CWidgetStatsC, CCardTitle } from '@coreui/react'
 import { CChart } from '@coreui/react-chartjs'
 import CIcon from '@coreui/icons-react'
 import { cilNoteAdd, cilPeople, cilWc, cilSpreadsheet } from '@coreui/icons'
+import { collection, query, onSnapshot } from 'firebase/firestore'
+import db from '../../firebase'
 
 const Dashboard = () => {
+  const [question, setQuestion] = useState([
+    {
+      class: '6',
+      topic: 'PS',
+      count: 1,
+      date: '27/02/2023',
+      description: 'This question is from the topic of chemistry and elements.',
+      modelAnswer: 'Au',
+      question: 'What is the chemical symbol for gold?',
+      score: '10',
+    },
+  ])
+  useEffect(
+    () =>
+      onSnapshot(query(collection(db, 'question')), (questionSnapshot2) => {
+        const questionInfoTable = []
+        questionSnapshot2.forEach((questionDoc) => {
+          var questionInfo = questionDoc.data()
+          questionInfoTable.push({
+            class: questionInfo.class,
+            topic: questionInfo.topic,
+            count: questionInfo.count,
+            date: questionInfo.date,
+            decription: questionInfo.description,
+            modelAnswer: questionInfo.modelAnswer,
+            question: questionInfo.question,
+            score: questionInfo.score,
+          })
+        })
+        setQuestion(questionInfoTable)
+      }),
+    [],
+  )
+  const widgetValues = {
+    question: question.length,
+  }
   return (
     <CRow>
       <CCol xs={3}>
@@ -37,7 +75,7 @@ const Dashboard = () => {
           progress={{ value: 50 }}
           text="Widget helper text"
           title="Questions"
-          value="90"
+          value={widgetValues.question}
         />
       </CCol>
       <CCol xs={3}>
@@ -49,96 +87,108 @@ const Dashboard = () => {
           progress={{ value: 50 }}
           text="Widget helper text"
           title="Topics"
-          value="8"
+          value={widgetValues.question}
         />
       </CCol>
       <CCol xs={6}>
-        <CChart
-          type="bar"
-          data={{
-            labels: ['Maths', 'Science', 'Health', 'English', 'History', 'Religion', 'Language'],
-            datasets: [
-              {
-                label: 'Modules',
-                data: [40, 20, 12, 39, 10, 40, 39],
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                  'rgba(255, 205, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(201, 203, 207, 0.2)',
+        <CCard>
+          <CCardBody>
+            <CCardTitle>Question Count</CCardTitle>
+            <CChart
+              responsive
+              type="bar"
+              data={{
+                labels: question.map((question) => question.topic),
+                datasets: [
+                  {
+                    label: 'Topics',
+                    data: question.map((question) => question.count),
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 205, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(201, 203, 207, 0.2)',
+                    ],
+                    borderColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(255, 159, 64)',
+                      'rgb(255, 205, 86)',
+                      'rgb(75, 192, 192)',
+                      'rgb(54, 162, 235)',
+                      'rgb(153, 102, 255)',
+                      'rgb(201, 203, 207)',
+                    ],
+                  },
                 ],
-                borderColor: [
-                  'rgb(255, 99, 132)',
-                  'rgb(255, 159, 64)',
-                  'rgb(255, 205, 86)',
-                  'rgb(75, 192, 192)',
-                  'rgb(54, 162, 235)',
-                  'rgb(153, 102, 255)',
-                  'rgb(201, 203, 207)',
-                ],
-              },
-            ],
-          }}
-          labels="months"
-        />
+              }}
+              labels="months"
+            />
+          </CCardBody>
+        </CCard>
       </CCol>
 
       <CCol xs={6}>
-        <CChart
-          type="line"
-          data={{
-            labels: [
-              'January',
-              'February',
-              'March',
-              'April',
-              'May',
-              'June',
-              'July',
-              'August',
-              'September',
-              'October',
-              'November',
-              'December',
-            ],
-            datasets: [
-              {
-                label: '6th Grade',
-                backgroundColor: 'rgba(220, 220, 220, 0.2)',
-                borderColor: 'rgba(220, 220, 220, 1)',
-                pointBackgroundColor: 'rgba(220, 220, 220, 1)',
-                pointBorderColor: '#fff',
-                data: [40, 44, 50, 39, 66, 56, 59, 78, 70],
-              },
-              {
-                label: '7th Grade',
-                backgroundColor: 'rgba(151, 187, 205, 0.2)',
-                borderColor: 'rgba(151, 187, 205, 1)',
-                pointBackgroundColor: 'rgba(151, 187, 205, 1)',
-                pointBorderColor: '#fff',
-                data: [63, 71, 69, 64, 73, 78, 59, 70, 60],
-              },
-              {
-                label: '8th Grade',
-                backgroundColor: 'rgba(100, 60, 205, 0.2)',
-                borderColor: 'rgba(100, 60, 205, 1)',
-                pointBackgroundColor: 'rgba(100, 60, 205, 1)',
-                pointBorderColor: '#fff',
-                data: [60, 52, 40, 35, 54, 51, 29, 60, 55],
-              },
-            ],
-          }}
-        />
+        <CCard>
+          <CCardBody>
+            <CCardTitle>Student Average</CCardTitle>
+            <CChart
+              responsive
+              type="line"
+              data={{
+                labels: [
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December',
+                ],
+                datasets: [
+                  {
+                    label: '6th Grade',
+                    backgroundColor: 'rgba(220, 220, 220, 0.2)',
+                    borderColor: 'rgba(220, 220, 220, 1)',
+                    pointBackgroundColor: 'rgba(220, 220, 220, 1)',
+                    pointBorderColor: '#fff',
+                    data: [40, 44, 50, 39, 66, 56, 59, 78, 70],
+                  },
+                  {
+                    label: '7th Grade',
+                    backgroundColor: 'rgba(151, 187, 205, 0.2)',
+                    borderColor: 'rgba(151, 187, 205, 1)',
+                    pointBackgroundColor: 'rgba(151, 187, 205, 1)',
+                    pointBorderColor: '#fff',
+                    data: [63, 71, 69, 64, 73, 78, 59, 70, 60],
+                  },
+                  {
+                    label: '8th Grade',
+                    backgroundColor: 'rgba(100, 60, 205, 0.2)',
+                    borderColor: 'rgba(100, 60, 205, 1)',
+                    pointBackgroundColor: 'rgba(100, 60, 205, 1)',
+                    pointBorderColor: '#fff',
+                    data: [60, 52, 40, 35, 54, 51, 29, 60, 55],
+                  },
+                ],
+              }}
+            />
+          </CCardBody>
+        </CCard>
       </CCol>
       <CCol xs={12}>
         {' '}
         <br />
         <Link to="/student/addStudent">
           <CButton color="primary" className="float-end" size="md">
-            Add Question
+            Add Student
           </CButton>
         </Link>{' '}
         <Link to="/question/addQuestion">
