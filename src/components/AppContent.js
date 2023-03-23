@@ -6,15 +6,7 @@ import { CContainer, CSpinner } from '@coreui/react'
 import routes from '../routes'
 const StudentSinglePage = React.lazy(() => import('../views/student/studentPage/studentSinglePage'))
 const StudentPage = React.lazy(() => import('../views/student/studentPage/studentPage'))
-
-const NotFound = () => {
-  return (
-    <div>
-      <h1>404 Not Found</h1>
-      <p>The page you requested could not be found.</p>
-    </div>
-  )
-}
+const NotFound = React.lazy(() => import('../views/pages/page404/Page404'))
 
 const AppContent = () => {
   return (
