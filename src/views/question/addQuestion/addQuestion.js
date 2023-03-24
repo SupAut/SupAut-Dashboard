@@ -35,7 +35,7 @@ function AddQuestionPage() {
     let questionSize = getQuestionSize.size + 1
     await setDoc(doc(questionRef, `${questionSize}`), {
       count: questionSize,
-      class: insertGrade,
+      grade: insertGrade.replace(/\D/g, ''),
       topic: insertTopic,
       question: insertQuestion,
       description: insertDescription,
