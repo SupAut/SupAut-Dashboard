@@ -1,7 +1,6 @@
 import { collection, query, onSnapshot } from 'firebase/firestore'
 import db from '../../../firebase'
 import React, { useState, useEffect } from 'react'
-//import db from '../../../firebase'
 import {
   CAvatar,
   CButton,
@@ -25,7 +24,7 @@ const ViewQuestionsPage = () => {
   const [vis, setVis] = useState(false)
   const [question, setQuestion] = useState([
     {
-      class: '6',
+      grade: '6',
       topic: 'PS',
       count: 1,
       date: '27/02/2023',
@@ -42,7 +41,7 @@ const ViewQuestionsPage = () => {
         questionSnapshot2.forEach((questionDoc) => {
           var questionInfo = questionDoc.data()
           questionInfoTable.push({
-            class: questionInfo.class,
+            grade: questionInfo.grade,
             topic: questionInfo.topic,
             count: parseInt(questionInfo.count),
             date: questionInfo.date,
@@ -123,7 +122,7 @@ const ViewQuestionsPage = () => {
                         <CModalBody>
                           <p>Class: {ques.class}</p>
                           <p>Question Number: {ques.count}</p>
-                          <p>Class: {ques.class}</p>
+                          <p>Grade: {ques.grade}</p>
                           <p>Question: {ques.question}</p>
                           <p>Description: {ques.description}</p>
                           <p>Model Answer: {ques.modelAnswer}</p>
