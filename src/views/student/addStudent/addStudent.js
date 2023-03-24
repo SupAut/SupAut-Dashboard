@@ -17,7 +17,7 @@ import {
 function AddStudentPage() {
   const [insertName, setInsertName] = useState('')
   const [insertContact, setInsertContact] = useState('')
-  const [insertClass, setInsertClass] = useState('')
+  const [insertGrade, setInsertGrade] = useState('')
   const [insertCaregiverContact, setInsertCaregiverContact] = useState('')
   const [insertCaregiverEmail, setInsertCaregiverEmail] = useState('')
   // this is the insert method
@@ -29,7 +29,7 @@ function AddStudentPage() {
     await setDoc(doc(studentRef, `${studentListSize}`), {
       name: insertName,
       contact: insertContact,
-      class: insertClass,
+      grade: insertGrade.replace(/\D/g, ''),
       careGiverContact: insertCaregiverContact,
       careGiverEmail: insertCaregiverEmail,
       skill: {
@@ -43,7 +43,7 @@ function AddStudentPage() {
     // clearing all the fields after backend implementation
     setInsertName('')
     setInsertContact('')
-    setInsertClass('')
+    setInsertGrade('')
     setInsertCaregiverContact('')
     setInsertCaregiverEmail('')
   }
@@ -98,8 +98,8 @@ function AddStudentPage() {
                   </CFormLabel>
                   <CFormSelect
                     id="validationCustom04"
-                    value={insertClass}
-                    onChange={(e) => setInsertClass(e.target.value)}
+                    value={insertGrade}
+                    onChange={(e) => setInsertGrade(e.target.value)}
                   >
                     <option>Grade 6</option>
                     <option>Grade 7</option>
