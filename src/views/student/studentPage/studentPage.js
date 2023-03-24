@@ -23,7 +23,7 @@ const StudentPage = () => {
   const [student, setStudent] = useState([
     {
       id: '1',
-      class: '7',
+      grade: '7',
       name: 'John Doe',
       contact: '0776792726',
       careGiverEmail: 'doe@gmail.com',
@@ -39,7 +39,7 @@ const StudentPage = () => {
           var studentInfo = studentDoc.data()
           studentInfoTable.push({
             id: studentDoc.id,
-            class: studentInfo.class,
+            grade: studentInfo.grade,
             name: studentInfo.name,
             contact: studentInfo.contact,
             careGiverEmail: studentInfo.careGiverEmail,
@@ -89,7 +89,7 @@ const StudentPage = () => {
                     <CTableDataCell>
                       <div>{student.name}</div>
                       <div className="small text-medium-emphasis">
-                        Grade : {student.class} | Contact : {student.contact}
+                        Grade : {student.grade} | Contact : {student.contact}
                       </div>
                     </CTableDataCell>
                     {/* Care giver contact */}
