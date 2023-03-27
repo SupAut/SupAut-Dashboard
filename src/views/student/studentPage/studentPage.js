@@ -106,7 +106,7 @@ const StudentPage = () => {
                     </CTableDataCell>
                     <CTableDataCell>
                       <Link
-                        to={`/student/${student.id}/${student.class}/${student.name}/${student.contact}/${student.careGiverEmail}/${student.careGiverContact}/${student.skill.creativity}/${student.skill.logical}/${student.skill.time}/${student.skill.visual}`}
+                        to={`/student/${student.id}/${student.grade}/${student.name}/${student.contact}/${student.careGiverEmail}/${student.careGiverContact}/${student.skill.creativity}/${student.skill.logical}/${student.skill.time}/${student.skill.visual}`}
                       >
                         <CButton color="primary" variant="outline">
                           Go to Page
