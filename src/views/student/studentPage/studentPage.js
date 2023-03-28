@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { collection, query, onSnapshot } from 'firebase/firestore'
+import { collection, query, onSnapshot, where, updateDoc, doc } from 'firebase/firestore'
 import db from '../../../firebase'
 import {
   CAvatar,
@@ -21,40 +21,57 @@ import { CButton } from '@coreui/react/dist'
 
 async function updateSkillLevel(student) {
   const grade = student.grade
+  const studentId = student.id
 
   // Get all students with the same grade
-  const querySnapshot = await db.collection('students').where('grade', '==', grade).get()
+  const studentCollectionRef = collection(db, 'student')
+  const studentQuery = query(studentCollectionRef, where('grade', '==', grade))
+  onSnapshot(studentQuery, async (studentSnapshot) => {
+    const helpRequestCounts = studentSnapshot.docs
+      .map((doc) => {
+        const { logicalHelp, visualHelp } = doc.data().helpRequestCount
+        return {
+          logical: parseInt(logicalHelp),
+          visual: parseInt(visualHelp),
+        }
+      })
+      .filter((count) => !isNaN(count.logical) && !isNaN(count.visual)) // Filter out invalid values
 
-  // Calculate the mean and standard deviation for help requests for logical and visual
-  const helpRequestCounts = querySnapshot.docs.map((doc) => doc.data().helpRequestCount)
-  const meanLogical =
-    helpRequestCounts.reduce((total, count) => total + count.logical, 0) / querySnapshot.size
-  const meanVisual =
-    helpRequestCounts.reduce((total, count) => total + count.visual, 0) / querySnapshot.size
-  const stdDevLogical = Math.sqrt(
-    helpRequestCounts.reduce(
-      (total, count) => total + Math.pow(count.logical - meanLogical, 2),
-      0,
-    ) / querySnapshot.size,
-  )
-  const stdDevVisual = Math.sqrt(
-    helpRequestCounts.reduce((total, count) => total + Math.pow(count.visual - meanVisual, 2), 0) /
-      querySnapshot.size,
-  )
+    const meanLogical =
+      helpRequestCounts.reduce((total, count) => total + count.logical, 0) /
+      helpRequestCounts.length
 
-  // Calculate the z-score for the student's help request count for logical and visual
-  const zScoreLogical = (student.helpRequestCount.logical - meanLogical) / stdDevLogical
-  const zScoreVisual = (student.helpRequestCount.visual - meanVisual) / stdDevVisual
+    const meanVisual =
+      helpRequestCounts.reduce((total, count) => total + count.visual, 0) / helpRequestCounts.length
 
-  // Determine the skill level based on the z-score
-  const skill = {}
-  skill.logical = zScoreLogical * 10 + 50 // Scale the z-score to a value between 0 and 100
-  skill.visual = zScoreVisual * 10 + 50 // Scale the z-score to a value between 0 and 100
-  skill.timeManagement = student.skill.timeManagement
-  skill.creativity = student.skill.creativity
+    const stdDevLogical = Math.sqrt(
+      helpRequestCounts.reduce(
+        (total, count) => total + Math.pow(count.logical - meanLogical, 2),
+        0,
+      ) / helpRequestCounts.length,
+    )
 
-  // Update the student's skill object in the database
-  await db.collection('students').doc(student.id).update({ skill })
+    const stdDevVisual = Math.sqrt(
+      helpRequestCounts.reduce(
+        (total, count) => total + Math.pow(count.visual - meanVisual, 2),
+        0,
+      ) / helpRequestCounts.length,
+    )
+    // Calculate the z-score for the student's help request count for logical and visual
+    const zScoreLogical =
+      (parseInt(student.helpRequestCount.logicalHelp) - meanLogical) / stdDevLogical
+    const zScoreVisual = (parseInt(student.helpRequestCount.visualHelp) - meanVisual) / stdDevVisual
+    // Determine the skill level based on the z-score
+    const confirmed = doc(db, 'student', `${studentId}`)
+    await updateDoc(confirmed, {
+      skill: {
+        logical: (zScoreLogical * 10 + 50).toString(),
+        visual: (zScoreVisual * 10 + 50).toString(),
+        time: student.skill.time,
+        creativity: student.skill.creativity,
+      },
+    })
+  })
 }
 
 const StudentPage = () => {
@@ -76,7 +93,6 @@ const StudentPage = () => {
         const studentInfoTable = []
         studentSnapshot.forEach((studentDoc) => {
           var studentInfo = studentDoc.data()
-          console.log(studentInfo)
           studentInfoTable.push({
             id: studentDoc.id,
             grade: studentInfo.grade,
