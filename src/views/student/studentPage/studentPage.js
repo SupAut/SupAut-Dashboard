@@ -90,11 +90,11 @@ const StudentPage = () => {
   useEffect(
     () =>
       onSnapshot(query(collection(db, 'student')), (studentSnapshot) => {
-        const studentInfoTable = []
+        let studentInfoTable = []
         studentSnapshot.forEach((studentDoc) => {
           var studentInfo = studentDoc.data()
           studentInfoTable.push({
-            id: studentDoc.id,
+            id: parseInt(studentDoc.id),
             grade: studentInfo.grade,
             name: studentInfo.name,
             contact: studentInfo.contact,
@@ -112,6 +112,7 @@ const StudentPage = () => {
             },
           })
         })
+        studentInfoTable = studentInfoTable.sort((a, b) => a.id - b.id) // sort by count
         setStudent(studentInfoTable)
       }),
     [],
