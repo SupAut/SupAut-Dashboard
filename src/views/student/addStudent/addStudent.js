@@ -32,6 +32,10 @@ function AddStudentPage() {
       grade: insertGrade.replace(/\D/g, ''),
       careGiverContact: insertCaregiverContact,
       careGiverEmail: insertCaregiverEmail,
+      helpRequestCount: {
+        logicalHelp: '0',
+        visualHelp: '0',
+      },
       skill: {
         creativity: '0',
         logical: '0',
