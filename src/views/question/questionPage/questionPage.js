@@ -3,10 +3,6 @@ import db from '../../../firebase'
 import React, { useState, useEffect } from 'react'
 import {
   CAvatar,
-  CAccordion,
-  CAccordionBody,
-  CAccordionHeader,
-  CAccordionItem,
   CButton,
   CModal,
   CModalHeader,
@@ -105,10 +101,7 @@ const ViewQuestionsPage = () => {
                 {question.map((ques, index) => (
                   <CTableRow v-for="ques in tableItems" key={index}>
                     <CTableHeaderCell scope="row">
-                      <CAvatar
-                        size="md"
-                        src={`https://ui-avatars.com/api/?background=random&rounded=true&bold=true&name=${ques.count}`}
-                      >
+                      <CAvatar color="secondary" textColor="white">
                         <div>{ques.count}</div>
                       </CAvatar>
                     </CTableHeaderCell>
@@ -116,30 +109,60 @@ const ViewQuestionsPage = () => {
                       <div>{ques.topic} </div>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <CAccordion flush>
-                        <CAccordionItem itemKey={1}>
-                          <CAccordionHeader>Question Detail</CAccordionHeader>
-                          <CAccordionBody>
-                            <p>Question Detail ({ques.topic})</p>
-                            <p>Class: {ques.class}</p>
-                            <p>Question Number: {ques.count}</p>
-                            <p>Grade: {ques.grade}</p>
-                            <p>Question: {ques.question}</p>
-                            <p>Description: {ques.description}</p>
-                            <p>Model Answer: {ques.modelAnswer}</p>
-                          </CAccordionBody>
-                        </CAccordionItem>
-                      </CAccordion>
+                      {/* <CButton color="primary">Question Details</CButton> */}
+                      <CButton onClick={() => setVisible(!visible)}>Question Details</CButton>
+                      <CModal
+                        alignment="center"
+                        visible={visible}
+                        onClose={() => setVisible(false)}
+                      >
+                        <CModalHeader>
+                          <CModalTitle>Question Detail {ques.topic}</CModalTitle>
+                        </CModalHeader>
+                        <CModalBody>
+                          <p>Class: {ques.class}</p>
+                          <p>Question Number: {ques.count}</p>
+                          <p>Grade: {ques.grade}</p>
+                          <p>Question: {ques.question}</p>
+                          <p>Description: {ques.description}</p>
+                          <p>Model Answer: {ques.modelAnswer}</p>
+                        </CModalBody>
+                        <CModalFooter>
+                          <CButton color="secondary" onClick={() => setVisible(false)}>
+                            Close
+                          </CButton>
+                        </CModalFooter>
+                      </CModal>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <>
-                        <CAccordion flush>
-                          <CAccordionItem>
-                            <CAccordionHeader>Answer Detail</CAccordionHeader>
-                            <CAccordionBody></CAccordionBody>
-                          </CAccordionItem>
-                        </CAccordion>
-                      </>
+                      <CButton onClick={() => setVis(!vis)}>Answer Details</CButton>
+                      {answer.map((ans, ind) => (
+                        <>
+                          <CModal
+                            alignment="center"
+                            visible={vis}
+                            onClose={() => setVis(false)}
+                            v-for="ans in tableItems"
+                            key={ind}
+                          >
+                            <CModalHeader>
+                              <CModalTitle>Answer Detail {ques.topic}</CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+                              <p>Question: {ans.question}</p>
+                              <p>Answer: {ans.answer}</p>
+                              <p>Student: {ans.student}</p>
+                              <p>timestamp: {ans.timestamp}</p>
+                            </CModalBody>
+                            <CModalFooter>
+                              <CButton color="secondary" onClick={() => setVis(false)}>
+                                Close
+                              </CButton>
+                            </CModalFooter>
+                          </CModal>
+                        </>
+                      ))}
+                      {/* <CButton color="primary">Answer Details</CButton> */}
                     </CTableDataCell>
                     <CTableDataCell>
                       <div>{ques.date} </div>
