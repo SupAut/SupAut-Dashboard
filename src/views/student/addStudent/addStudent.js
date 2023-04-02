@@ -17,7 +17,7 @@ import {
 function AddStudentPage() {
   const [insertName, setInsertName] = useState('')
   const [insertContact, setInsertContact] = useState('')
-  const [insertClass, setInsertClass] = useState('')
+  const [insertGrade, setInsertGrade] = useState('')
   const [insertCaregiverContact, setInsertCaregiverContact] = useState('')
   const [insertCaregiverEmail, setInsertCaregiverEmail] = useState('')
   // this is the insert method
@@ -29,9 +29,13 @@ function AddStudentPage() {
     await setDoc(doc(studentRef, `${studentListSize}`), {
       name: insertName,
       contact: insertContact,
-      class: insertClass,
+      grade: insertGrade.replace(/\D/g, ''),
       careGiverContact: insertCaregiverContact,
       careGiverEmail: insertCaregiverEmail,
+      helpRequestCount: {
+        logicalHelp: '0',
+        visualHelp: '0',
+      },
       skill: {
         creativity: '0',
         logical: '0',
@@ -43,17 +47,18 @@ function AddStudentPage() {
     // clearing all the fields after backend implementation
     setInsertName('')
     setInsertContact('')
-    setInsertClass('')
+    setInsertGrade('')
     setInsertCaregiverContact('')
     setInsertCaregiverEmail('')
   }
 
   const [validated, setValidated] = useState(false)
   const handleSubmit = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
     const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
+    if (form.checkValidity()) {
+      insertRecord()
     }
     setValidated(true)
   }
@@ -67,7 +72,7 @@ function AddStudentPage() {
                 className="row g-3 needs-validation"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmit && insertRecord}
+                onSubmit={handleSubmit}
               >
                 <CCol md={12}>
                   <CFormLabel htmlFor="validationCustom01">Student Name</CFormLabel>
@@ -97,8 +102,8 @@ function AddStudentPage() {
                   </CFormLabel>
                   <CFormSelect
                     id="validationCustom04"
-                    value={insertClass}
-                    onChange={(e) => setInsertClass(e.target.value)}
+                    value={insertGrade}
+                    onChange={(e) => setInsertGrade(e.target.value)}
                   >
                     <option>Grade 6</option>
                     <option>Grade 7</option>

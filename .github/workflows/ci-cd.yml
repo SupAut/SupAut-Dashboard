@@ -1,7 +1,10 @@
 name: Continuous Integration and Delivery
+
 on:
   push:
-    branches: [main, staging]
+    branches:
+      - main
+      - staging
 
 jobs:
   test_and_build:
@@ -9,14 +12,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Run npm install, test and build
+      - name: Install dependencies
+        run: npm install
+      - name: Test
+        run: npm test
+      - name: Build
         run: |
-          npm install -g npm@9.6.2
-          npm cache clear --force
-          npm i --force
-          npm ci --force
-          npm test
-          npm run build
+          if [ ${{ github.ref }} = 'refs/heads/staging' ]; then
+            GENERATE_SOURCEMAP=false npm run build
+          else
+            npm run build
+          fi
         env:
           CI: false
       - name: Upload build artifact
@@ -25,6 +31,26 @@ jobs:
           name: build
           path: build
           retention-days: 1
+          
+  deploy_to_staging:
+    if: github.ref == 'refs/heads/staging'
+    needs: test_and_build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}
+          channelId: live
+          projectId: supaut-staging
 
   deploy_to_production:
     if: github.ref == 'refs/heads/main'
@@ -38,31 +64,17 @@ jobs:
         with:
           name: build
           path: build
-      - name: Deploy to firebase hosting
+      - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_372209 }}'
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_372209 }}
           channelId: live
           projectId: supaut-372209
 
-  deploy_to_staging:
-    if: github.ref == 'refs/heads/staging'
-    needs: test_and_build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Download build artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
-      - name: Deploy to firebase hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: >-
-            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPAUT_STAGING }}
-          channelId: live
-          projectId: supaut-staging
+
+
+
+
+
+

@@ -6,7 +6,7 @@
 
 ## Adding Changes
 ```
-git switch -c added-chart
+git switch -c added-charf
 ```
 Make the changes 
 
