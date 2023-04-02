@@ -7,12 +7,6 @@ import {
   CAccordionBody,
   CAccordionHeader,
   CAccordionItem,
-  CButton,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -24,8 +18,6 @@ import {
 import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react'
 
 const ViewQuestionsPage = () => {
-  const [visible, setVisible] = useState(false)
-  const [vis, setVis] = useState(false)
   const [question, setQuestion] = useState([
     {
       grade: '6',
@@ -60,28 +52,20 @@ const ViewQuestionsPage = () => {
       }),
     [],
   )
-  const [answer, setAnswer] = useState([
-    {
-      question: 'What is the chemical symbol for gold?',
-      answer: 'hehe',
-      student: 'zainab',
-      timestamp: '22/03/2023',
-    },
-  ])
+  const [subcollectionData, setSubcollectionData] = useState([{ mews: 'a', sandy: 'b', zain: 'c' }])
   useEffect(
     () =>
-      onSnapshot(query(collection(db, 'answer')), (answerSnapshot2) => {
-        const answerInfoTable = []
-        answerSnapshot2.forEach((answerDoc) => {
-          var answerInfo = answerDoc.data()
-          answerInfoTable.push({
-            question: answerInfo.question,
-            answer: answerInfo.answer,
-            student: answerInfo.student,
-            timestamp: answerInfo.timestamp,
+      onSnapshot(query(collection(db, 'question', '1', 'answers')), (questionAnswerSnapshot2) => {
+        const questionAnswerTable = []
+        questionAnswerSnapshot2.forEach((questionAnswerDoc) => {
+          var questionAnswerInfo = questionAnswerDoc.data()
+          questionAnswerTable.push({
+            zain: questionAnswerInfo.zain,
+            sandy: questionAnswerInfo.sandy,
+            mews: questionAnswerInfo.mews,
           })
         })
-        setAnswer(answerInfoTable)
+        setSubcollectionData(questionAnswerTable)
       }),
     [],
   )
@@ -133,12 +117,19 @@ const ViewQuestionsPage = () => {
                     </CTableDataCell>
                     <CTableDataCell>
                       <>
-                        <CAccordion flush>
-                          <CAccordionItem>
-                            <CAccordionHeader>Answer Detail</CAccordionHeader>
-                            <CAccordionBody></CAccordionBody>
-                          </CAccordionItem>
-                        </CAccordion>
+                        {subcollectionData.map((item, index) => (
+                          <CAccordion flush key={index}>
+                            <CAccordionItem>
+                              <CAccordionHeader>Answer Detail</CAccordionHeader>
+                              <CAccordionBody>
+                                <p>Answers for Question {ques.count}:</p>
+                                <p>- {item.sandy}</p>
+                                <p>- {item.zain}</p>
+                                <p>- {item.mews}</p>
+                              </CAccordionBody>
+                            </CAccordionItem>
+                          </CAccordion>
+                        ))}
                       </>
                     </CTableDataCell>
                     <CTableDataCell>
