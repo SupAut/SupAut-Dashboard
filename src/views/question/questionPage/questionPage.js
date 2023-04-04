@@ -18,6 +18,28 @@ import {
 import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react'
 
 const ViewQuestionsPage = () => {
+  const [answer, setAnswer] = useState([
+    {
+      description: 'This question is from the topic of chemistry and elements.',
+      count: 1,
+    },
+  ])
+  useEffect(
+    () =>
+      onSnapshot(query(collection(db, 'answer')), (answerSnapshot2) => {
+        var answerInfoTable = []
+        answerSnapshot2.forEach((answerDoc) => {
+          var answerInfo = answerDoc.data()
+          answerInfoTable.push({
+            description: answerInfo.question.description,
+            count: answerInfo.question.count,
+          })
+        })
+        answerInfoTable = answerInfoTable.sort((a, b) => a.count - b.count) // sort by count
+        setAnswer(answerInfoTable)
+      }),
+    [],
+  )
   const [question, setQuestion] = useState([
     {
       grade: '6',
@@ -41,7 +63,7 @@ const ViewQuestionsPage = () => {
             topic: questionInfo.topic,
             count: parseInt(questionInfo.count),
             date: questionInfo.date,
-            decription: questionInfo.description,
+            description: questionInfo.description,
             modelAnswer: questionInfo.modelAnswer,
             question: questionInfo.question,
             score: questionInfo.score,
@@ -52,23 +74,7 @@ const ViewQuestionsPage = () => {
       }),
     [],
   )
-  const [subcollectionData, setSubcollectionData] = useState([{ mews: 'a', sandy: 'b', zain: 'c' }])
-  useEffect(
-    () =>
-      onSnapshot(query(collection(db, 'question', '1', 'answers')), (questionAnswerSnapshot2) => {
-        const questionAnswerTable = []
-        questionAnswerSnapshot2.forEach((questionAnswerDoc) => {
-          var questionAnswerInfo = questionAnswerDoc.data()
-          questionAnswerTable.push({
-            zain: questionAnswerInfo.zain,
-            sandy: questionAnswerInfo.sandy,
-            mews: questionAnswerInfo.mews,
-          })
-        })
-        setSubcollectionData(questionAnswerTable)
-      }),
-    [],
-  )
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -104,8 +110,9 @@ const ViewQuestionsPage = () => {
                         <CAccordionItem itemKey={1}>
                           <CAccordionHeader>Question Detail</CAccordionHeader>
                           <CAccordionBody>
-                            <p>Question Detail ({ques.topic})</p>
-                            <p>Class: {ques.class}</p>
+                            <p>
+                              <b>Details of Question {ques.count}:</b>
+                            </p>{' '}
                             <p>Question Number: {ques.count}</p>
                             <p>Grade: {ques.grade}</p>
                             <p>Question: {ques.question}</p>
@@ -117,19 +124,19 @@ const ViewQuestionsPage = () => {
                     </CTableDataCell>
                     <CTableDataCell>
                       <>
-                        {subcollectionData.map((item, index) => (
-                          <CAccordion flush key={index}>
-                            <CAccordionItem>
-                              <CAccordionHeader>Answer Detail</CAccordionHeader>
+                        <CAccordion flush>
+                          <CAccordionItem>
+                            <CAccordionHeader>Answer Detail</CAccordionHeader>
+                            {answer.length > 0 && (
                               <CAccordionBody>
-                                <p>Answers for Question {ques.count}:</p>
-                                <p>- {item.sandy}</p>
-                                <p>- {item.zain}</p>
-                                <p>- {item.mews}</p>
+                                <p>
+                                  <b>Answer for Question {ques.count}:</b>
+                                </p>
+                                <p>Description: {answer[4].description}</p>
                               </CAccordionBody>
-                            </CAccordionItem>
-                          </CAccordion>
-                        ))}
+                            )}
+                          </CAccordionItem>
+                        </CAccordion>
                       </>
                     </CTableDataCell>
                     <CTableDataCell>
