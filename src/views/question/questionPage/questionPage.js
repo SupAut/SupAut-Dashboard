@@ -132,7 +132,7 @@ const ViewQuestionsPage = () => {
                                 <p>
                                   <b>Answer for Question {ques.count}:</b>
                                 </p>
-                                <p>Description: {answer[4].description}</p>
+                                <p>Description: {answer[0].description}</p>
                               </CAccordionBody>
                             )}
                           </CAccordionItem>
