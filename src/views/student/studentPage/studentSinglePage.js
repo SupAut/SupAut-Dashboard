@@ -72,6 +72,8 @@ function StudentSinglePage() {
                     button={'value'.toString()}
                     onClick={handleClickAgain()}
                     className="float-end"
+                    href="https://docs.google.com/document/d/1lPQbrwrYlk6wM2pHv4KEZ3IFPoellNoZWJ0HZ9kZ2N4/edit?usp=sharing"
+                    as="a"
                   >
                     Create IEP Report
                   </CButton>
