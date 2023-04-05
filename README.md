@@ -1,28 +1,5 @@
 # SupAut - (Dashboard)
 
-## Important Links
-- [CoreUI Documentation](https://coreui.io/react/docs/getting-started/introduction/)
-- [Contributions](https://github.com/firstcontributions/first-contributions)
-
-## Adding Changes
-```
-git switch -c added-charf
-```
-Make the changes 
-
-```
-git statu
-```
-```
-git add src/views/student/studentPage/studentPage.js
-```
-```
-git commit -m "Added chart to student page"
-```
-
-```
- git push -u origin added-chart
-```
 ## Project Description
 Ardent is an all-you-need business partner, automating customer interaction while providing concise data related to your business in a simple dashboard. Aimed to help the management of small businesses, Ardent is both a culmination of a WhatsApp chat bot, and a business dashboard.
 
