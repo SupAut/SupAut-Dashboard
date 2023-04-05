@@ -74,6 +74,46 @@ const ViewQuestionsPage = () => {
       }),
     [],
   )
+  const [answ, setAnsw] = useState([])
+  useEffect(
+    () =>
+      onSnapshot(query(collection(db, 'answer')), (answSnapshot) => {
+        const answArr = []
+        answSnapshot.forEach((answDoc) => {
+          var answInfo = answDoc.data()
+          //get answ info
+          let answList = []
+          question.forEach((quest) => {
+            quest.item.forEach((answItem) => {
+              if (answItem.name === answInfo.name) {
+                answList.push({
+                  date: quest.date,
+                  time: quest.time,
+                  id: quest.id,
+                  customer: {
+                    name: quest.name,
+                    contact: quest.contact,
+                  },
+                  quantity: quest.quantity,
+                })
+              }
+            })
+          })
+          answArr.push({
+            item: {
+              id: answDoc.id,
+              name: answInfo.name,
+              measurement: answInfo.measurement,
+              price: parseInt(answInfo.price),
+            },
+            sales: answList,
+            itemStatus: answInfo.status,
+          })
+        })
+        setAnsw(answArr)
+      }),
+    [question],
+  )
 
   return (
     <CRow>
@@ -127,14 +167,14 @@ const ViewQuestionsPage = () => {
                         <CAccordion flush>
                           <CAccordionItem>
                             <CAccordionHeader>Answer Detail</CAccordionHeader>
-                            {answer.length > 0 && (
-                              <CAccordionBody>
+                            {answer.map((ans, index) => (
+                              <CAccordionBody key={index}>
                                 <p>
                                   <b>Answer for Question {ques.count}:</b>
                                 </p>
-                                <p>Description: {answer[0].description}</p>
+                                <p>Description: {ans.description}</p>
                               </CAccordionBody>
-                            )}
+                            ))}
                           </CAccordionItem>
                         </CAccordion>
                       </>
