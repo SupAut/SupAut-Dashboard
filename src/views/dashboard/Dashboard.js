@@ -8,6 +8,31 @@ import { collection, query, onSnapshot } from 'firebase/firestore'
 import db from '../../firebase'
 
 const Dashboard = () => {
+  const [student, setStudent] = useState([
+    {
+      careContact: '1',
+      careMail: '1',
+      contact: '1',
+      grade: '1',
+    },
+  ])
+  useEffect(
+    () =>
+      onSnapshot(query(collection(db, 'student')), (studentSnapshot2) => {
+        const studentInfoTable = []
+        studentSnapshot2.forEach((studentDoc) => {
+          var studentInfo = studentDoc.data()
+          studentInfoTable.push({
+            careContact: studentInfo.careContact,
+            careMail: studentInfo.careMail,
+            contact: studentInfo.contact,
+            grade: studentInfo.grade,
+          })
+        })
+        setStudent(studentInfoTable)
+      }),
+    [],
+  )
   const [question, setQuestion] = useState([
     {
       class: '6',
@@ -43,6 +68,7 @@ const Dashboard = () => {
   )
   const widgetValues = {
     question: question.length,
+    student: student.length,
   }
   return (
     <CRow>
@@ -53,7 +79,7 @@ const Dashboard = () => {
           progress={{ value: 50 }}
           text="Widget helper text"
           title="Students"
-          value="152"
+          value={widgetValues.student}
         />
       </CCol>
       <CCol xs={3}>
@@ -64,8 +90,8 @@ const Dashboard = () => {
           inverse
           progress={{ value: 50 }}
           text="Widget helper text"
-          title="Staff"
-          value="10"
+          title="Classes"
+          value="3"
         />
       </CCol>
       <CCol xs={3}>
@@ -133,7 +159,7 @@ const Dashboard = () => {
       <CCol xs={6}>
         <CCard>
           <CCardBody>
-            <CCardTitle>Student Average</CCardTitle>
+            <CCardTitle>Average Screen Time</CCardTitle>
             <CChart
               responsive
               type="line"
@@ -159,7 +185,7 @@ const Dashboard = () => {
                     borderColor: 'rgba(220, 220, 220, 1)',
                     pointBackgroundColor: 'rgba(220, 220, 220, 1)',
                     pointBorderColor: '#fff',
-                    data: [40, 44, 50, 39, 66, 56, 59, 78, 70],
+                    data: [40, 44, 50, 39, 66, 56, 59, 78, 70, 64, 73, 78],
                   },
                   {
                     label: '7th Grade',
@@ -167,7 +193,7 @@ const Dashboard = () => {
                     borderColor: 'rgba(151, 187, 205, 1)',
                     pointBackgroundColor: 'rgba(151, 187, 205, 1)',
                     pointBorderColor: '#fff',
-                    data: [63, 71, 69, 64, 73, 78, 59, 70, 60],
+                    data: [63, 71, 69, 64, 73, 78, 59, 70, 60, 52, 40, 35],
                   },
                   {
                     label: '8th Grade',
@@ -175,7 +201,7 @@ const Dashboard = () => {
                     borderColor: 'rgba(100, 60, 205, 1)',
                     pointBackgroundColor: 'rgba(100, 60, 205, 1)',
                     pointBorderColor: '#fff',
-                    data: [60, 52, 40, 35, 54, 51, 29, 60, 55],
+                    data: [60, 52, 40, 35, 54, 51, 29, 60, 55, 50, 39, 66],
                   },
                 ],
               }}
