@@ -1,3 +1,9 @@
+/**
+ * This file creates and exports a Redux store instance for managing the application's state.
+ * The store handles the `sidebarShow` state property and can be extended as needed.
+ * For more information on Redux, see https://redux.js.org/.
+ */
+
 import { createStore } from 'redux'
 
 const initialState = {

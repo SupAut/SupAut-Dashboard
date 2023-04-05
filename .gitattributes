@@ -1,2 +1,5 @@
+# This file specifies how Git should handle files in the repository,
+# ensuring consistent line endings for all files.
+
 # Enforce Unix newlines
 * text=auto eol=lf

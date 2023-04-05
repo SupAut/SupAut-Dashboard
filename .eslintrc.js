@@ -1,3 +1,4 @@
+// This file configures ESLint, a tool for catching syntax errors and enforcing coding standards.
 module.exports = {
   // parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   parserOptions: {
