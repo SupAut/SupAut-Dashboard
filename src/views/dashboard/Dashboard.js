@@ -95,7 +95,6 @@ const Dashboard = () => {
           <CCardBody>
             <CCardTitle>Question Count</CCardTitle>
             <CChart
-              responsive
               type="bar"
               data={{
                 labels: question.map((question) => question.topic),
@@ -135,7 +134,6 @@ const Dashboard = () => {
           <CCardBody>
             <CCardTitle>Student Average</CCardTitle>
             <CChart
-              responsive
               type="line"
               data={{
                 labels: [
@@ -187,12 +185,12 @@ const Dashboard = () => {
         {' '}
         <br />
         <Link to="/student/addStudent">
-          <CButton color="primary" className="float-end" size="md">
+          <CButton color="primary" className="float-end" size="sm">
             Add Student
           </CButton>
         </Link>{' '}
         <Link to="/question/addQuestion">
-          <CButton color="primary" size="md">
+          <CButton color="primary" size="sm">
             Add Question
           </CButton>
         </Link>
