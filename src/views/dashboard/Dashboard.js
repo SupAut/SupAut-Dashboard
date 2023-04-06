@@ -116,7 +116,7 @@ const Dashboard = () => {
           value={widgetValues.question}
         />
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={{ cols: 2 }} md={{ cols: 2 }}>
         <CCard>
           <CCardBody>
             <CCardTitle>Question Count</CCardTitle>
@@ -155,7 +155,7 @@ const Dashboard = () => {
         </CCard>
       </CCol>
 
-      <CCol xs={6}>
+      <CCol xs={{ cols: 2 }} md={{ cols: 2 }}>
         <CCard>
           <CCardBody>
             <CCardTitle>Average Screen Time</CCardTitle>
