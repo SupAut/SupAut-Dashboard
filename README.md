@@ -10,7 +10,7 @@ The application on the frontend is built using React.js which uses the CoreUI li
 - [Watch Project Pitch](https://youtu.be/mBL9gokXN48)
 - [Watch Project Demo](https://youtu.be/PNgmPYE9MPs)
 
-> Note: The following installation focuses on running the frontend of the application. Click [here](https://github.com/Zainab-Fahim/ardent-partner/tree/main/ardent-chat-bot#readme) to checkout the process to run the chatbot.
+> Note: The following installation focuses on running the frontend of the application. Click [here](https://github.com/SupAut/SupAut-Chatbot) to checkout the process to run the chatbot.
 
 ## What you need
 
@@ -18,7 +18,7 @@ To run this repo you will need to have:
 
 ### Firebase Setup
 1. Create a firebase project
-2. Create a firestore database with three collections, namely: `customer`(1), `product`(2), `order`(3) 
+2. Create a firestore database with three collections, namely: `student`(1), `question`(2), `answer`(3) 
 3. Fill in with temparory values as you create a starting document for each collection with the following fields
 4. Get the firebase credentials for the specifics of your project from the project settings (you will find it at the end of the page, with npm selected as your SDK setup), and replace the contents of `supaut-dashboard/src/firebase.js` with that of your project credentials. 
 
