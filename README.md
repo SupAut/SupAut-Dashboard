@@ -20,7 +20,7 @@ To run this repo you will need to have:
 1. Create a firebase project
 2. Create a firestore database with three collections, namely: `customer`(1), `product`(2), `order`(3) 
 3. Fill in with temparory values as you create a starting document for each collection with the following fields
-4. Get the firebase credentials for the specifics of your project from the project settings (you will find it at the end of the page, with npm selected as your SDK setup), and replace the contents of `ardent-partner/src/firebase.js` with that of your project credentials. 
+4. Get the firebase credentials for the specifics of your project from the project settings (you will find it at the end of the page, with npm selected as your SDK setup), and replace the contents of `supaut-dashboard/src/firebase.js` with that of your project credentials. 
 
 ## How to run
 
