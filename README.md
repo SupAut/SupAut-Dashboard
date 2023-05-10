@@ -1,7 +1,7 @@
 # SupAut - (Dashboard)
 
 ## Project Description
-Ardent is an all-you-need business partner, automating customer interaction while providing concise data related to your business in a simple dashboard. Aimed to help the management of small businesses, Ardent is both a culmination of a WhatsApp chat bot, and a business dashboard.
+SupAut is an all-you-need teacher's assistant, automating answering students' queries while providing concise progress of the student in a simple dashboard. Aimed to help the management of a SEN classroom, SupAut is both a culmination of a WhatsApp chat bot, and a business dashboard.
 
 On one hand the chatbot intelligently communicates with your students, answering queries as well as tracking student skill while sending assigned assignment questions. While on the other hand, the dashboard displays the received information regarding answer details, and many other student skill related data, as well as perform many other functionalities. 
 
