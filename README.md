@@ -7,8 +7,8 @@ On one hand the chatbot intelligently communicates with your students, answering
 
 The application on the frontend is built using React.js which uses the CoreUI library to construct the dashboard, while integrating many Firebase products such as Firestore (database), Hosting (deployment), and Extensions (Twilio). Twilio (which is used to build the chatbot) itself is an incorporation of many services such as Autopilot (NLP), Functions and WhatsApp messaging API. Lastly the application also has a CI/CD pipeline which is handled by GitHub actions.
 
-- [Watch Project Pitch](https://youtu.be/mBL9gokXN48)
-- [Watch Project Demo](https://youtu.be/PNgmPYE9MPs)
+- [Watch Project Pitch](https://drive.google.com/file/d/1_EvCTHOZ-4KDIIct-8xWqlCbv93jrlt6/view?usp=sharing)
+- [Watch Project Demo](https://drive.google.com/file/d/1fL46rUyBIwAyp6vIvjx1S4L7XvaRdVd-/view?usp=sharing)
 
 > Note: The following installation focuses on running the frontend of the application. Click [here](https://github.com/SupAut/SupAut-Chatbot) to checkout the process to run the chatbot.
 
